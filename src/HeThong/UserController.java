@@ -5,17 +5,26 @@
  */
 package HeThong;
 
+import Utils.JDBCconn;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -24,33 +33,104 @@ import javafx.scene.input.MouseEvent;
  */
 public class UserController implements Initializable {
 
-    @FXML Label lb_close;
-    @FXML TextField txtUsername;
-    @FXML TextField txtPassword;
-    @FXML Button btnSignIn;
-    
-    public void handleButtonAction(MouseEvent event){
+    @FXML
+    Label lb_close;
+    @FXML
+    TextField txtUsername;
+    @FXML
+    TextField txtPassword;
+    @FXML
+    Button btnSignIn;
+    @FXML
+    Label lblError;
+
+    //-- 
+    Connection conn = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+
+    @FXML
+    public void handleButtonAction(MouseEvent event) {
+
         if(event.getSource()==lb_close){
             System.exit(0);
         }
-        if(event.getSource()==btnSignIn){
-        
+        if (event.getSource() == btnSignIn) {
+            //login
+            if (logIn().equals("Success")) {
+                try {
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    stage.setMaximized(true);
+                    stage.close();
+                    Scene scence = new Scene(FXMLLoader.load(getClass().getResource(
+                            "TheDocGia.fxml")));
+                    stage.setScene(scence);
+                    stage.show();
+//                    Parent root = FXMLLoader.load(getClass().getResource("TheDocGia.fxml"));
+//
+//                    Scene scene = new Scene(root);
+//                    Stage stage = new Stage();
+//                    stage.setScene(scene);
+//                    stage.show();
+                } catch (IOException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    //-- 
-    Connection conn = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet =null;
-    private void logIn(){
-    
+        if (conn == null) {
+            lblError.setTextFill(Color.TOMATO);
+            lblError.setText("Server Error : Check");
+        } else {
+            lblError.setTextFill(Color.GREEN);
+            lblError.setText("Server is up : Good to go");
+        }
+    }
+
+    private String logIn() {
+        
         String username = txtUsername.getText().toString();
         String password = txtPassword.getText().toString();
-        
-        String sql = "SELECT * FROM users WHERE username  = ? and password = ? ";
+       
+        String sql = "SELECT * FROM users WHERE username  = ? and password = ?";
+
+        try {
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, password);
+            rs = stm.executeQuery();
+            if (rs.next()) { 
+                lblError.setTextFill(Color.GREEN);
+                lblError.setText("Login successful..");
+                System.err.println("Successfull..");
+                return "Success";
+            } else {
+                lblError.setTextFill(Color.TOMATO);
+                lblError.setText("Enter correct username/pass..");
+                System.err.println("Woring Logins..");
+                return "Error";
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+            return "Exception";
+        }       
     }
+
+    public UserController() {
+        conn = JDBCconn.getConnection();
+    }
+
+//  .  private void showDialog(String info, String  header, String title){
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setContentText(info);
+//        alert.setHeaderText(header);
+//        alert.showAndWait();
+//    }
 }
