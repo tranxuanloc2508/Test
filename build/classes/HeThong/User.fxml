@@ -11,7 +11,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeThong.UserController">
     <children>
         <TextField fx:id="txtUsername" layoutX="315.0" layoutY="88.0" promptText="UserName...." />
-        <PasswordField fx:id="txtPassword" layoutX="315.0" layoutY="135.0" promptText="PassWord" />
+        <PasswordField fx:id="txtPassword" layoutX="315.0" layoutY="135.0" promptText="Password..." />
         <Button fx:id="btnSignIn" layoutX="450.0" layoutY="188.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" text="Sign In" />
         <Label layoutX="284.0" layoutY="192.0" text="Forgot Password" />
         <Button layoutX="329.0" layoutY="266.0" mnemonicParsing="false" text="Sign Up" />
