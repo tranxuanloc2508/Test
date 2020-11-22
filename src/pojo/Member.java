@@ -34,151 +34,146 @@ public class Member {
         this.sdt = sdt;
     }
 
-    public Member(String text, String text0, String text1, String text2, String text3, String text4, String text5, String text6) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  
 
-    /**
-     * @return the ma
-     */
-    public String getMa() {
-        return ma;
-    }
+        /**
+         * @return the ma
+         */
+        public String getMa() {
+            return ma;
+        }
 
-    /**
-     * @param ma the ma to set
-     */
-    public void setMa(String ma) {
-        this.ma = ma;
-    }
+        /**
+         * @param ma the ma to set
+         */
+        public void setMa(String ma) {
+            this.ma = ma;
+        }
 
-    /**
-     * @return the hoten
-     */
-    public String getHoten() {
-        return hoten;
-    }
+        /**
+         * @return the hoten
+         */
+        public String getHoten() {
+            return hoten;
+        }
 
-    /**
-     * @param hoten the hoten to set
-     */
-    public void setHoten(String hoten) {
-        this.hoten = hoten;
-    }
+        /**
+         * @param hoten the hoten to set
+         */
+        public void setHoten(String hoten) {
+            this.hoten = hoten;
+        }
 
-    /**
-     * @return the gioitinh
-     */
-    public String getGioitinh() {
-        return gioitinh;
-    }
+        /**
+         * @return the gioitinh
+         */
+        public String getGioitinh() {
+            return gioitinh;
+        }
 
-    /**
-     * @param gioitinh the gioitinh to set
-     */
-    public void setGioitinh(String gioitinh) {
-        this.gioitinh = gioitinh;
-    }
+        /**
+         * @param gioitinh the gioitinh to set
+         */
+        public void setGioitinh(String gioitinh) {
+            this.gioitinh = gioitinh;
+        }
 
-    /**
-     * @return the ngaysinh
-     */
-    public String getNgaysinh() {
-        return ngaysinh;
-    }
+        /**
+         * @return the ngaysinh
+         */
+        public String getNgaysinh() {
+            return ngaysinh;
+        }
 
-    /**
-     * @param ngaysinh the ngaysinh to set
-     */
-    public void setNgaysinh(String ngaysinh) {
-        this.ngaysinh = ngaysinh;
-    }
+        /**
+         * @param ngaysinh the ngaysinh to set
+         */
+        public void setNgaysinh(String ngaysinh) {
+            this.ngaysinh = ngaysinh;
+        }
 
-    /**
-     * @return the doituong
-     */
-    public String getDoituong() {
-        return doituong;
-    }
+        /**
+         * @return the doituong
+         */
+        public String getDoituong() {
+            return doituong;
+        }
 
-    /**
-     * @param doituong the doituong to set
-     */
-    public void setDoituong(String doituong) {
-        this.doituong = doituong;
-    }
+        /**
+         * @param doituong the doituong to set
+         */
+        public void setDoituong(String doituong) {
+            this.doituong = doituong;
+        }
 
-    /**
-     * @return the bophan
-     */
-    public String getBophan() {
-        return bophan;
-    }
+        /**
+         * @return the bophan
+         */
+        public String getBophan() {
+            return bophan;
+        }
 
-    /**
-     * @param bophan the bophan to set
-     */
-    public void setBophan(String bophan) {
-        this.bophan = bophan;
-    }
+        /**
+         * @param bophan the bophan to set
+         */
+        public void setBophan(String bophan) {
+            this.bophan = bophan;
+        }
 
-    /**
-     * @return the hanthe
-     */
-    public String getHanthe() {
-        return hanthe;
-    }
+        /**
+         * @return the hanthe
+         */
+        public String getHanthe() {
+            return hanthe;
+        }
 
-    /**
-     * @param hanthe the hanthe to set
-     */
-    public void setHanthe(String hanthe) {
-        this.hanthe = hanthe;
-    }
+        /**
+         * @param hanthe the hanthe to set
+         */
+        public void setHanthe(String hanthe) {
+            this.hanthe = hanthe;
+        }
 
-    /**
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
+        /**
+         * @return the email
+         */
+        public String getEmail() {
+            return email;
+        }
 
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
+        /**
+         * @param email the email to set
+         */
+        public void setEmail(String email) {
+            this.email = email;
+        }
 
-    /**
-     * @return the diachi
-     */
-    public String getDiachi() {
-        return diachi;
-    }
+        /**
+         * @return the diachi
+         */
+        public String getDiachi() {
+            return diachi;
+        }
 
-    /**
-     * @param diachi the diachi to set
-     */
-    public void setDiachi(String diachi) {
-        this.diachi = diachi;
-    }
+        /**
+         * @param diachi the diachi to set
+         */
+        public void setDiachi(String diachi) {
+            this.diachi = diachi;
+        }
 
-    /**
-     * @return the sdt
-     */
-    public String getSdt() {
-        return sdt;
-    }
+        /**
+         * @return the sdt
+         */
+        public String getSdt() {
+            return sdt;
+        }
 
-    /**
-     * @param sdt the sdt to set
-     */
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
-    }
+        /**
+         * @param sdt the sdt to set
+         */
+        public void setSdt(String sdt) {
+            this.sdt = sdt;
+        }
     
-    
-    
-               
 }

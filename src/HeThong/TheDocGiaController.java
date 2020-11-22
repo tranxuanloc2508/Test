@@ -8,13 +8,13 @@ package HeThong;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.UUID;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import pojo.Book;
 import pojo.Member;
 
 /**
@@ -40,8 +40,8 @@ public class TheDocGiaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    public void addMember(ActionEvent event){
-//        String bookId = UUID.randomUUID().toString();
+      public void addMember(ActionEvent event){
+        String mId = UUID.randomUUID().toString();
         Member b= new Member(this.txtMa.getText(), this.txtHoten.getText(), this.txtGioiTinh.getText(), 
                 txtNgaySinh.getText(), txtDoiTuong.getText(), txtBoPhan.getText(), 
                 txtHanThe.getText(), txtDiaChi.getText(), txtDiaChi.getText(),txtSdt.getText());
