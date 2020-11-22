@@ -5,11 +5,19 @@
  */
 package HeThong;
 
+import Utils.JDBCconn;
 import Utils.Util;
 import java.awt.Desktop;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,13 +51,57 @@ public class BorrowBookController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        //load ds khach hang
          try {
             this.loadBook();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
+//         search book/
+         this.txttimkiem.textProperty().addListener(et->{
+             this.tbmuon.getItems().clear();
+             try {
+                 this.tbmuon.setItems(
+                         FXCollections.observableArrayList(Util.Search(
+                                 this.txttimkiem.getText())));
+             } catch (SQLException ex) {
+                 System.err.println(ex.getMessage());
+             }
+         });
+//         seachbook();
             
-    }    
+    }  
+//    private void seachbook(){
+//        txttimkiem.setOnKeyReleased(e->{
+//            if(txttimkiem.getText().equals("")){
+//                try {
+//                    loadBook();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(BorrowBookController.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            else{
+//            String sql = "select * from book where tensach like'%"+txttimkiem.getText()+"%'";
+//            try{
+//                Connection conn = JDBCconn.getConnection();
+//                PreparedStatement stm = conn.prepareStatement(sql);        
+//                ResultSet rs = stm.executeQuery();
+//
+//                List<Book> books= new ArrayList<>();
+//                while(rs.next()){
+//                    Book q = new Book(rs.getString("id"),rs.getString("masach"),
+//                            rs.getString("tensach"),rs.getString("tacgia"),
+//                            rs.getString("motasach"),rs.getString("namxuatban"),
+//                            rs.getString("ngaynhapsach"),rs.getString("vitri"));
+//                    books.add(q);
+//                }
+//            
+//            }catch(SQLException ex){
+//                Logger.getLogger(BorrowBookController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            }
+//        });
+//    }
     private void loadBook() throws SQLException {
        
         TableColumn clid= new TableColumn("id ");
@@ -76,10 +128,7 @@ public class BorrowBookController implements Initializable {
         this.tbmuon.setItems(FXCollections.observableArrayList(Util.getBooks("")));
         
     }
-    public void Search(ActionEvent event){
-        String s = txttimkiem.getText();
-        
-    }
+   
 
      
     
