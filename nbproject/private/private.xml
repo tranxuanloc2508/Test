@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/Utils/Util.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/HeThong/UserController.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/Utils/JDBCconn.java</file>
@@ -11,6 +12,11 @@
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/pojo/Member.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/HeThong/TheDocGiaController.java</file>
             <file>file:/C:/Users/USER/Documents/NetBeansProjects/BaiTapLon/Test/src/HeThong/QLThuVien.java</file>
+=======
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Book.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/Util.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BookController.java</file>
+>>>>>>> 51256fdf3641bfbcaf6c0b377d4f9da178525237
         </group>
     </open-files>
 </project-private>

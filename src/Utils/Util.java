@@ -7,8 +7,12 @@ package Utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
+import javafx.scene.control.TableView;
 import pojo.Book;
 import pojo.Member;
 
@@ -17,6 +21,32 @@ import pojo.Member;
  * @author LocNe
  */
 public class Util {
+    
+    public static List<Book> getBooks (String keyword) throws SQLException{
+        String sql = "SELECT * FROM book ";
+//        if(!keyword.isEmpty())
+//            sql+="WHERE id like?";Where id=?,masach=?,tensach=?,tacgia=?,motasach=?,namxuatban=?,ngaynhapsach=?,vitri=?
+        
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+//        if(!keyword.isEmpty())
+//           stm.setString(1, keyword);
+//            stm.setString(2, String.format("%%%$%%", keyword));
+        
+        ResultSet rs = stm.executeQuery();
+        
+        List<Book> books= new ArrayList<>();
+        while(rs.next()){
+            Book q = new Book(rs.getString("id"),rs.getString("masach"),
+                    rs.getString("tensach"),rs.getString("tacgia"),
+                    rs.getString("motasach"),rs.getString("namxuatban"),
+                    rs.getString("ngaynhapsach"),rs.getString("vitri"));
+            books.add(q);
+        }
+        
+        return books;
+        
+    }
     public static void addorUpdateBook(Book book,String sql) throws SQLException{
      Connection conn = JDBCconn.getConnection();
         
