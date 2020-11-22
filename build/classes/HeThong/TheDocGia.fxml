@@ -46,7 +46,7 @@
         <TextField promptText="Email.." GridPane.columnIndex="1" GridPane.rowIndex="7" />
         <TextField promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="8" />
         <TextField promptText="Số điện thoại..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
-        <Button mnemonicParsing="false" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+        <Button mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
       <ComboBox accessibleRole="LIST_VIEW" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </children>
 </GridPane>

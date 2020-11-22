@@ -37,16 +37,16 @@
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Email" GridPane.rowIndex="7" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Địa chỉ" GridPane.rowIndex="8" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Điện thoại" GridPane.rowIndex="9" />
-        <TextField GridPane.columnIndex="1" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <TextField promptText="Email.." GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <TextField promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="8" />
-        <TextField promptText="Số điện thoại..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
-        <Button mnemonicParsing="false" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <ComboBox accessibleRole="LIST_VIEW" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="txtMa" GridPane.columnIndex="1" />
+        <TextField fx:id="txtHoten" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="txtNgaySinh" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <TextField fx:id="txtDoiTuong" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+        <TextField fx:id="txtBoPhan" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+        <TextField fx:id="txtHanThe" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <TextField fx:id="txtEmail" promptText="Email.." GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <TextField fx:id="txtDiaChi" promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <TextField fx:id="txtSdt" promptText="Số điện thoại..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
+        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+      <ComboBox fx:id="txtGioiTinh" accessibleRole="LIST_VIEW" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </children>
 </GridPane>
