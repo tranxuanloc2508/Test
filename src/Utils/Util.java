@@ -76,8 +76,8 @@ public class Util {
                        + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?,?)";
             addorUpdateBook(book, sql);
      }
-
-    public static void addM(Member b, String s) throws SQLException {
+     
+     public static void addM(Member b, String s) throws SQLException {
         Connection conn = JDBCconn.getConnection();
         
          
@@ -92,8 +92,8 @@ public class Util {
          stm.setString(5, b.getDoituong());
          stm.setString(6, b.getBophan());
          stm.setString(7, b.getHanthe());
-         stm.setString(8, b.getEmail());
-         stm.setString(9, b.getDiachi());
+         stm.setString(8, b.getDiachi());
+         stm.setString(9, b.getEmail());
          stm.setString(10, b.getSdt());
 
          stm.executeUpdate();
@@ -102,8 +102,8 @@ public class Util {
          
     }
     public static void addMember(Member m) throws SQLException{
-          String sql=  "INSERT INTO member(id,madocgia,hoten,gioitinh,ngaysinh,"
-                       + "doituong,bophan,hanthe,email) VALUES(?,?,?,?,?,?,?,?,?,?)";
+          String sql=  "INSERT INTO thedocgia(madocgia,hoten,gioitinh,ngaysinh,"
+                       + "doituong,bophan,hanthe,email,diachi,sdt) VALUES(?,?,?,?,?,?,?,?,?,?)";
             addM(m, sql);
     }
 //    
@@ -131,11 +131,30 @@ public class Util {
          
         
     }
-//     public static void delBook(Book book) throws SQLException{
-//         
-//            String sql=  "DELETE FROM book WHERE Id=id,masach,tensach,tacgia,motasach,"
-//                       + "namxuatban,ngaynhapsach,vitri) ";
-//            delB(book, sql);
-//     }
-     
+    public static List<Book> Search (String kw) throws SQLException{
+        String sql = "SELECT * FROM book ";
+//        if(!keyword.isEmpty())
+//            sql+="WHERE id like?";Where id=?,masach=?,tensach=?,tacgia=?,motasach=?,namxuatban=?,ngaynhapsach=?,vitri=?
+        
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+//        if(!keyword.isEmpty())
+//           stm.setString(1, keyword);
+//            stm.setString(2, String.format("%%%$%%", keyword));
+        
+        ResultSet rs = stm.executeQuery();
+        
+        List<Book> books= new ArrayList<>();
+        while(rs.next()){
+            Book q = new Book(rs.getString("id"),rs.getString("masach"),
+                    rs.getString("tensach"),rs.getString("tacgia"),
+                    rs.getString("motasach"),rs.getString("namxuatban"),
+                    rs.getString("ngaynhapsach"),rs.getString("vitri"));
+            books.add(q);
+        }
+        
+        return books;
+        
+    }
+    
 }
