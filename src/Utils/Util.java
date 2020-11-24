@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import pojo.Book;
 import pojo.Member;
@@ -25,13 +27,15 @@ public class Util {
     public static List<Book> getBooks (String keyword) throws SQLException{
         String sql = "SELECT * FROM book ";
 //        if(!keyword.isEmpty())
-//            sql+="WHERE id like?";Where id=?,masach=?,tensach=?,tacgia=?,motasach=?,namxuatban=?,ngaynhapsach=?,vitri=?
+//            sql+="WHERE tensach like?";
+            
         
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
 //        if(!keyword.isEmpty())
 //           stm.setString(1, keyword);
-//            stm.setString(2, String.format("%%%$%%", keyword));
+//            stm.setString(1, String.format("%%%s%%", keyword));
+            
         
         ResultSet rs = stm.executeQuery();
         
@@ -115,7 +119,7 @@ public class Util {
          
          //add Question
          PreparedStatement stm = conn.prepareStatement(sql);
-          stm.setString(1, book.getId());
+         stm.setString(1, book.getId());
          stm.setString(2, book.getMa());
          stm.setString(3, book.getTenSach());
          stm.setString(4, book.getTacGia());
@@ -131,16 +135,16 @@ public class Util {
          
         
     }
-    public static List<Book> Search (String kw) throws SQLException{
+    public static List<Book> Search (String keyword) throws SQLException{
         String sql = "SELECT * FROM book ";
-//        if(!keyword.isEmpty())
-//            sql+="WHERE id like?";Where id=?,masach=?,tensach=?,tacgia=?,motasach=?,namxuatban=?,ngaynhapsach=?,vitri=?
+        if(!keyword.isEmpty())
+            sql+="WHERE tensach like?";
         
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
-//        if(!keyword.isEmpty())
+        if(!keyword.isEmpty())
 //           stm.setString(1, keyword);
-//            stm.setString(2, String.format("%%%$%%", keyword));
+            stm.setString(1, String.format("%%%s%%", keyword));
         
         ResultSet rs = stm.executeQuery();
         
@@ -156,5 +160,9 @@ public class Util {
         return books;
         
     }
+//    @FXML 
+//    void sect(){
+//        FilteredList<Book> filteredData= new FilteredList<>
+//    }
     
 }

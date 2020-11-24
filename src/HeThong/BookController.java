@@ -50,14 +50,6 @@ public class BookController implements Initializable {
     @FXML Button btnThoat;
     @FXML TextField txtkeyword;
     @FXML TableView<Book> tbBook;
-    @FXML TableColumn tc1;
-    @FXML TableColumn tc2;
-    @FXML TableColumn tc3;
-    @FXML TableColumn tc4;
-    @FXML TableColumn tc5;
-    @FXML TableColumn tc6;
-    @FXML TableColumn tc7;
-    @FXML TableColumn tc8;
     
     
     @Override
@@ -70,35 +62,10 @@ public class BookController implements Initializable {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-            
+        //Search bôk
+        
     }    
     
-//    @FXML
-//    private void onOpen(ActionEvent event) {
-//        try {
-//            Connection conn=JDBCconn.getConnection();
-//            data=FXCollections.observableArrayList();
-//            ResultSet rs=conn.createStatement().executeQuery("SELECT * FROM book");
-//            while (rs.next()) {                
-//                data.add(new Book(rs.getString(1), rs.getString(2),
-//                        rs.getString(3), rs.getString(4), rs.getString(5), 
-//                        rs.getString(6), rs.getString(7), rs.getString(8)));
-//            }
-//        } catch (SQLException ex) {
-//            System.err.println("Error"+ex);
-//        }
-//       tc1.setCellValueFactory(new PropertyValueFactory("id"));
-//       tc2.setCellValueFactory(new PropertyValueFactory("masach"));
-//       tc3.setCellValueFactory(new PropertyValueFactory("tensach"));
-//       tc4.setCellValueFactory(new PropertyValueFactory("tacgia"));
-//       tc5.setCellValueFactory(new PropertyValueFactory("mota"));
-//       tc6.setCellValueFactory(new PropertyValueFactory("namxuatban"));
-//       tc7.setCellValueFactory(new PropertyValueFactory("ngaynhapsach"));
-//       tc8.setCellValueFactory(new PropertyValueFactory("vitri"));
-//       
-//      tbBook.setItems(null);
-//      tbBook.setItems(data);
-//    }
     @FXML
     public void addBook(ActionEvent event){
 //        String bookId = UUID.randomUUID().toString();
@@ -147,51 +114,5 @@ public class BookController implements Initializable {
         
             
                     
-    }
-            
-//        String bookId= txtid.getText();
-//        String bookMa= txtma.getText();
-//        String bookTen= txtten.getText();
-//        String bookTacGia= txttacGia.getText();
-//        String bookMota= txtmota.getText();
-//        String bookNXB= txtNXB.getText();
-//        String bookNgayNhapSach= txtNgayNhapSach.getText();
-//        String bookViTri= txtViTri.getText();
-//        if(bookId.isEmpty()||bookMa.isEmpty()||bookTen.isEmpty()||
-//                bookTacGia.isEmpty()||bookMota.isEmpty()||bookNXB.isEmpty()||
-//                bookNgayNhapSach.isEmpty()||bookViTri.isEmpty())
-//        {
-//            Alert alert= new Alert(Alert.AlertType.ERROR);
-//            alert.setHeaderText(null);
-//            alert.setContentText("Pleas Enter in all fields");
-//            alert.showAndWait();
-//            return;
-//        }
-            
-//    public void addQuestionHandler(ActionEvent event){
-//        String questionId = UUID.randomUUID().toString();
-//        
-//        
-//        ArrayList<Book> choices = new ArrayList<>();
-//        choices.add(new Choice(UUID.randomUUID().toString(),this.txtA.getText() , questionId));
-//        
-//        
-//       try{
-//            Utils.addQuestion(q, choices);
-//            
-//            this.tbQuestion.getItems().clear();
-//            this.tbQuestion.setItems(FXCollections.observableArrayList(Utils.getQuestion("")));
-//            
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setContentText("Add Question succsessful!!!!");
-//            alert.show();
-//       }catch(SQLException ex){
-//           Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("Add Question failed!!!!" + ex.getMessage());
-//            alert.show();
-//       }
-//    }
-//    
-
-    
+    } 
 }
