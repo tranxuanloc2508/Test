@@ -104,17 +104,17 @@ public class BorrowBookController implements Initializable {
 //    }
     private void loadBook() throws SQLException {
        
-        TableColumn clid= new TableColumn("id ");
-        TableColumn clma= new TableColumn("masach ");
-        TableColumn clten= new TableColumn("ten ");
-        TableColumn cltg= new TableColumn("tac gia ");
-        TableColumn clmota= new TableColumn("mo ta ");
-        TableColumn clnam= new TableColumn("nam xua ban ");
-        TableColumn clnhap= new TableColumn("ngay nhap ");
-        TableColumn clvitri= new TableColumn("vi tri ");
+       
+        TableColumn clma= new TableColumn("Mã sách ");
+        TableColumn clten= new TableColumn("Tên sách ");
+        TableColumn cltg= new TableColumn("Tác giả ");
+        TableColumn clmota= new TableColumn("Mô tả ");
+        TableColumn clnam= new TableColumn("Năm xuất bản ");
+        TableColumn clnhap= new TableColumn("Ngày nhập ");
+        TableColumn clvitri= new TableColumn("Vị trí sách ");
         
         
-        clid.setCellValueFactory(new PropertyValueFactory("id"));
+        
         clma.setCellValueFactory(new PropertyValueFactory("ma"));
         clten.setCellValueFactory(new PropertyValueFactory("tenSach"));
         cltg.setCellValueFactory(new PropertyValueFactory("tacGia"));
@@ -124,7 +124,7 @@ public class BorrowBookController implements Initializable {
         clvitri.setCellValueFactory(new PropertyValueFactory("viTri"));
 //        clContent.setPrefWidth(200);
         
-        this.tbmuon.getColumns().addAll(clid,clma,clten,cltg,clmota,clnam,clnhap,clvitri);
+        this.tbmuon.getColumns().addAll(clma,clten,cltg,clmota,clnam,clnhap,clvitri);
         this.tbmuon.setItems(FXCollections.observableArrayList(Util.getBooks("")));
         
     }
