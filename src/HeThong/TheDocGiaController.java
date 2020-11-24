@@ -5,7 +5,6 @@
  */
 package HeThong;
 
-import Utils.gioiTinh;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -44,28 +43,22 @@ public class TheDocGiaController implements Initializable {
     @FXML TextField txtDiaChi;
     @FXML TextField txtSdt;
     @FXML Button btnSave;
-    @FXML ComboBox<ComBoBox> cbGioiTinh;
+    @FXML ComboBox<String> cbGioiTinh;
     
-    //ObservableList<String> list = FXCollections.observableArrayList("Male","Femail","Orther");
+    ObservableList<String> list = FXCollections.observableArrayList("Man", "Woman", "Other");
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        //cbGioiTinh.setItems(list);
-        this.cbGioiTinh.prefWidthProperty().bind(this.grPand.widthProperty());
-         try {
-            // TODO
-            cbGioiTinh.getItems().addAll(gioiTinh.getGioiTinhs());
-//            loadQuestions();
-//            loadData(""
-                    } catch (SQLException ex) {
-            Logger.getLogger(TheDocGiaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void initialize(URL location, ResourceBundle resources) {
+        cbGioiTinh.setItems(list);
     }
+    public void comboBoxChanged (ActionEvent event){
+        cbGioiTinh.setPromptText(cbGioiTinh.getValue());
+    }
+
       public void addMember(ActionEvent event){
 
 //        String mId = UUID.randomUUID().toString();
         Member b= new Member(this.txtMa.getText(), this.txtHoten.getText(),
-                cbGioiTinh.getSelectionModel().getSelectedItem().getId(),
+                cbGioiTinh.getValue(),
                 txtNgaySinh.getText(), txtDoiTuong.getText(), txtBoPhan.getText(),
                 txtHanThe.getText(), txtDiaChi.getText(), txtDiaChi.getText(),
                 txtSdt.getText());
@@ -82,9 +75,5 @@ public class TheDocGiaController implements Initializable {
             alert.show();
         }
     }
-//      private void loadData(String kw) throws SQLException {
-//        tbQuestions.getItems().clear();
-//        tbQuestions.setItems(FXCollections.observableArrayList(QuestionServices.getQuestions(kw)));
-//    }
 
 }
