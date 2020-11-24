@@ -11,8 +11,8 @@ package pojo;
  */
 public class Member {
     private String ma;
-    private String hoten;     
-    private String gioitinh;
+    private String hoten;  
+    private int gioitinhID;
     private String ngaysinh;
     private String doituong;
     private String bophan;
@@ -20,11 +20,24 @@ public class Member {
     private String email;
     private String diachi;
     private String sdt;
+    private ComBoBox cbgioitinh;
 
-    public Member(String ma, String hoten, String gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
+//    public Member(String ma, String hoten,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
+//        this.ma = ma;
+//        this.hoten = hoten;
+////        this.gioitinh = gioitinh;
+//        this.ngaysinh = ngaysinh;
+//        this.doituong = doituong;
+//        this.bophan = bophan;
+//        this.hanthe = hanthe;
+//        this.email = email;
+//        this.diachi = diachi;
+//        this.sdt = sdt;
+//    }
+    public Member(String ma, String hoten,int gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;
         this.hoten = hoten;
-        this.gioitinh = gioitinh;
+        this.gioitinhID = gioitinh;
         this.ngaysinh = ngaysinh;
         this.doituong = doituong;
         this.bophan = bophan;
@@ -32,6 +45,7 @@ public class Member {
         this.email = email;
         this.diachi = diachi;
         this.sdt = sdt;
+//        this.cbgioitinh=cbGioitinh;
     }
 
   
@@ -64,19 +78,7 @@ public class Member {
             this.hoten = hoten;
         }
 
-        /**
-         * @return the gioitinh
-         */
-        public String getGioitinh() {
-            return gioitinh;
-        }
-
-        /**
-         * @param gioitinh the gioitinh to set
-         */
-        public void setGioitinh(String gioitinh) {
-            this.gioitinh = gioitinh;
-        }
+     
 
         /**
          * @return the ngaysinh
@@ -175,5 +177,37 @@ public class Member {
         public void setSdt(String sdt) {
             this.sdt = sdt;
         }
-    
+
+    /**
+     * @return the cbgioitinh
+     */
+    public ComBoBox getCbgioitinh() {
+        return cbgioitinh;
+    }
+
+    /**
+     * @param cbgioitinh the cbgioitinh to set
+     */
+    public void setCbgioitinh(ComBoBox cbgioitinh) {
+        this.cbgioitinh = cbgioitinh;
+    }
+
+    /**
+     * @return the gioitinhID
+     */
+    public int getGioitinhID() {
+        return gioitinhID;
+    }
+
+    /**
+     * @param gioitinhID the gioitinhID to set
+     */
+    public void setGioitinhID(int gioitinhID) {
+        this.gioitinhID = gioitinhID;
+    }
+
+    /**
+     * @return the gioitinh
+     */
+ 
 }

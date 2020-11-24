@@ -10,7 +10,7 @@ package pojo;
  * @author LocNe
  */
 public class Book {
-    private String id;
+    private int id;
     private String ma;
     private String tenSach;
     private String tacGia;
@@ -19,8 +19,19 @@ public class Book {
     private String ngayNhap;
     private String viTri;
 
-    public Book(String id,String ma,String ten,String tacGia,String moTa,String nam,String ngayNhap,String viTri){
+    public Book(int id,String ma,String ten,String tacGia,String moTa,String nam,String ngayNhap,String viTri){
         this.id =id;
+        this.tenSach =ten;
+        this.ma =ma;
+        this.moTa=moTa;
+        this.namXuatBan= nam;
+        this.ngayNhap=ngayNhap;
+        this.viTri=viTri;
+        this.tacGia=tacGia;
+                
+    }
+    public Book(String ma,String ten,String tacGia,String moTa,String nam,String ngayNhap,String viTri){
+        //this.id =id;
         this.tenSach =ten;
         this.ma =ma;
         this.moTa=moTa;
@@ -137,14 +148,14 @@ public class Book {
     /**
      * @return the id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }
