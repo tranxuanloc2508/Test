@@ -12,7 +12,7 @@ package pojo;
 public class Member {
     private String ma;
     private String hoten;  
-    private int gioitinhID;
+    private String gioitinh;
     private String ngaysinh;
     private String doituong;
     private String bophan;
@@ -34,10 +34,10 @@ public class Member {
 //        this.diachi = diachi;
 //        this.sdt = sdt;
 //    }
-    public Member(String ma, String hoten,int gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
+    public Member(String ma, String hoten,String gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;
         this.hoten = hoten;
-        this.gioitinhID = gioitinh;
+        this.gioitinh = gioitinh;
         this.ngaysinh = ngaysinh;
         this.doituong = doituong;
         this.bophan = bophan;
@@ -193,18 +193,22 @@ public class Member {
     }
 
     /**
-     * @return the gioitinhID
+     * @return the gioitinh
      */
-    public int getGioitinhID() {
-        return gioitinhID;
+    public String getGioitinh() {
+        return gioitinh;
     }
 
     /**
-     * @param gioitinhID the gioitinhID to set
+     * @param gioitinh the gioitinh to set
      */
-    public void setGioitinhID(int gioitinhID) {
-        this.gioitinhID = gioitinhID;
+    public void setGioitinh(String gioitinh) {
+        this.gioitinh = gioitinh;
     }
+
+    /**
+     * @return the gioitinhID
+
 
     /**
      * @return the gioitinh

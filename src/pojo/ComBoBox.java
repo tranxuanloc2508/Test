@@ -10,36 +10,16 @@ package pojo;
  * @author LocNe
  */
 public class ComBoBox {
-    private int id;
     private String name;
 
-    public ComBoBox(int id) {
-        this.id = id;
-    }
-    
-    public ComBoBox(int id, String name) {
-        this.id = id;
+    public ComBoBox(String name) {
         this.name = name;
     }
 
+
     @Override
     public String toString() {
-        return this.name; //To change body of generated methods, choose Tools | Templates.
-    }
-    
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
+        return this.getName(); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -56,3 +36,4 @@ public class ComBoBox {
         this.name = name;
     }
 }
+    

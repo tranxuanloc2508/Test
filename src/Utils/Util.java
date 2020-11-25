@@ -9,9 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.ComBoBox;
 import pojo.Member;
@@ -69,7 +69,7 @@ public class Util {
             String id = rs.getString("id");
             String ma = rs.getString("madocgia");
             String hoten = rs.getString("hoten");
-            int gioitinh = rs.getInt("gioitinh");
+            String gioitinh = rs.getString("gioitinh");
             String ngaysinh = rs.getString("ngaysinh");
             String doituong = rs.getString("doituong");
             String bophan = rs.getString("bophan");
@@ -130,7 +130,7 @@ public class Util {
          PreparedStatement stm = conn.prepareStatement(s);
          stm.setString(1, b.getMa());
          stm.setString(2, b.getHoten());
-         stm.setInt(3, b.getGioitinhID());
+         stm.setString(3, b.getGioitinh());
          stm.setString(4, b.getNgaysinh());
          stm.setString(5, b.getDoituong());
          stm.setString(6, b.getBophan());
@@ -150,11 +150,11 @@ public class Util {
             addM(m, sql);
     }
 //    
-    public static boolean deleteQuestion(String questionId) throws SQLException {
+    public static boolean delBook(int bookId) throws SQLException {
         Connection conn = JDBCconn.getConnection();
         String sql = "DELETE FROM book WHERE id=?";
         PreparedStatement stm = conn.prepareStatement(sql);
-        stm.setString(1, questionId);
+        stm.setInt(1, bookId);
         
         int kq = stm.executeUpdate();
         
@@ -184,6 +184,13 @@ public class Util {
         
         return books;
         
+    }
+    public static  Alert AlertInfo(String content, Alert.AlertType type)
+    {
+        Alert a = new Alert(type);
+        a.setContentText(content);
+        
+        return a;
     }
      
 }

@@ -47,6 +47,6 @@
         <TextField fx:id="txtDiaChi" promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="8" />
         <TextField fx:id="txtSdt" promptText="Số điện thoại..." GridPane.columnIndex="1" GridPane.rowIndex="9" />
         <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-      <ComboBox fx:id="cbGioiTinh" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ComboBox fx:id="cbGioiTinh" onAction="#comboBoxChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     </children>
 </GridPane>

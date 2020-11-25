@@ -127,20 +127,24 @@ public class BookController implements Initializable {
             btn.setOnAction(evt -> {
                 // thực hiện sự kiện xóa câu hỏi
                 Button b = (Button) evt.getSource();
-                TableCell c = (TableCell) b.getParent();
-                Book q = (Book) c.getTableRow().getItem();
-                
+//                TableCell c = (TableCell) b.getParent();
+//                Book q = (Book) c.getTableRow().getItem();
                 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Bạn chắc chắn xóa? Nó sẽ xóa các lựa chọn liên quan!");
+                alert.setContentText("Bạn chắc chắn xóa? ");
                 alert.showAndWait().ifPresent(res -> {
                     if (res == ButtonType.OK) {
+                         TableCell c = (TableCell) b.getParent();
+                         Book q = (Book) c.getTableRow().getItem();
                         try {
-                            if (Util.deleteQuestion(""))
+                          Util.delBook(q.getId());
+                          this.tbBook.getItems().clear();
+                          this.tbBook.setItems(FXCollections.observableArrayList(Util.getBooks("")));
+                          Util.AlertInfo("Xóa thành công", Alert.AlertType.INFORMATION);
+                                
                                 this.loadBook();
                         } catch (SQLException ex) {
-                            Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                                Util.AlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION);                        }
                     }
                 });
                 
