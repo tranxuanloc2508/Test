@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Alert;
 import pojo.Book;
-import pojo.ComBoBox;
 import pojo.Member;
 
 /**
@@ -77,7 +76,6 @@ public class Util {
             String email = rs.getString("email");
             String diachi = rs.getString("diachi");
             String sdt = rs.getString("sdt");
-            ComBoBox c = new ComBoBox(gioitinh);
             
             Member q = new Member(ma, hoten, gioitinh, ngaysinh, doituong, bophan, hanthe, email, diachi, sdt);
             
@@ -185,12 +183,11 @@ public class Util {
         return books;
         
     }
-    public static  Alert AlertInfo(String content, Alert.AlertType type)
-    {
-        Alert a = new Alert(type);
-        a.setContentText(content);
-        
-        return a;
-    }
+    public static Alert getAlertInfo(String content, Alert.AlertType type){
+         Alert a = new Alert(type);
+         a.setContentText(content);
+         
+         return a;
+     }
      
 }

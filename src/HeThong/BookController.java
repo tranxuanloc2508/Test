@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -101,7 +100,7 @@ public class BookController implements Initializable {
     }
     private void loadBook() throws SQLException {
        
-        TableColumn clid= new TableColumn("id ");
+        //TableColumn clid= new TableColumn("id ");
         TableColumn clma= new TableColumn("Mã sách ");
         TableColumn clten= new TableColumn("Tên sách ");
         TableColumn cltg= new TableColumn("Tác giả ");
@@ -111,7 +110,7 @@ public class BookController implements Initializable {
         TableColumn clvitri= new TableColumn("Vị trí sách ");
         
         
-        clid.setCellValueFactory(new PropertyValueFactory("id"));
+        //.setCellValueFactory(new PropertyValueFactory("id"));
         clma.setCellValueFactory(new PropertyValueFactory("ma"));
         clten.setCellValueFactory(new PropertyValueFactory("tenSach"));
         cltg.setCellValueFactory(new PropertyValueFactory("tacGia"));
@@ -127,24 +126,24 @@ public class BookController implements Initializable {
             btn.setOnAction(evt -> {
                 // thực hiện sự kiện xóa câu hỏi
                 Button b = (Button) evt.getSource();
-//                TableCell c = (TableCell) b.getParent();
-//                Book q = (Book) c.getTableRow().getItem();
+                TableCell c = (TableCell) b.getParent();
+                Book q = (Book) c.getTableRow().getItem();
                 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Bạn chắc chắn xóa? ");
                 alert.showAndWait().ifPresent(res -> {
                     if (res == ButtonType.OK) {
-                         TableCell c = (TableCell) b.getParent();
-                         Book q = (Book) c.getTableRow().getItem();
+//                         TableCell c = (TableCell) b.getParent();
+//                         Book q = (Book) c.getTableRow().getItem();
                         try {
                           Util.delBook(q.getId());
-                          this.tbBook.getItems().clear();
-                          this.tbBook.setItems(FXCollections.observableArrayList(Util.getBooks("")));
-                          Util.AlertInfo("Xóa thành công", Alert.AlertType.INFORMATION);
-                                
-                                this.loadBook();
+                          
+                          Util.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show(); 
+                                this.loadData("");
                         } catch (SQLException ex) {
-                                Util.AlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION);                        }
+                                Util.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();
+                                //Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);                  
+                        }
                     }
                 });
                 
@@ -153,10 +152,14 @@ public class BookController implements Initializable {
             cell.setGraphic(btn);
             return cell;
         });
-        this.tbBook.getColumns().addAll(clid,clma,clten,cltg,clmota,clnam,clnhap,clvitri,colAction);
+        this.tbBook.getColumns().addAll(clma,clten,cltg,clmota,clnam,clnhap,clvitri,colAction);
         this.tbBook.setItems(FXCollections.observableArrayList(Util.getBooks("")));
         
             
                     
     } 
+    private void loadData(String kw) throws SQLException {
+        tbBook.getItems().clear();
+        tbBook.setItems(FXCollections.observableArrayList(Util.getBooks(kw)));
+    }
 }

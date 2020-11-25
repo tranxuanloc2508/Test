@@ -20,7 +20,6 @@ public class Member {
     private String email;
     private String diachi;
     private String sdt;
-    private ComBoBox cbgioitinh;
 
 //    public Member(String ma, String hoten,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
 //        this.ma = ma;
@@ -177,22 +176,7 @@ public class Member {
         public void setSdt(String sdt) {
             this.sdt = sdt;
         }
-
-    /**
-     * @return the cbgioitinh
-     */
-    public ComBoBox getCbgioitinh() {
-        return cbgioitinh;
-    }
-
-    /**
-     * @param cbgioitinh the cbgioitinh to set
-     */
-    public void setCbgioitinh(ComBoBox cbgioitinh) {
-        this.cbgioitinh = cbgioitinh;
-    }
-
-    /**
+        /**
      * @return the gioitinh
      */
     public String getGioitinh() {
