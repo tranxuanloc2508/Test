@@ -58,16 +58,16 @@ public class BorrowBookController implements Initializable {
             System.err.println(ex.getMessage());
         }
 //         search book/
-         this.txttimkiem.textProperty().addListener(et->{
-             this.tbmuon.getItems().clear();
-             try {
-                 this.tbmuon.setItems(
-                         FXCollections.observableArrayList(Util.Search(
-                                 this.txttimkiem.getText())));
-             } catch (SQLException ex) {
-                 System.err.println(ex.getMessage());
-             }
-         });
+//         this.txttimkiem.textProperty().addListener(et->{
+//             this.tbmuon.getItems().clear();
+//             try {
+//                 this.tbmuon.setItems(
+//                         FXCollections.observableArrayList(Util.Search(
+//                                 this.txttimkiem.getText())));
+//             } catch (SQLException ex) {
+//                 System.err.println(ex.getMessage());
+//             }
+//         });
 //         seachbook();
             
     }  

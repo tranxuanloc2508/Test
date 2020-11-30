@@ -5,8 +5,12 @@
         <group>
             <file>file:/E:/KTPM/Test/src/HeThong/BookController.java</file>
             <file>file:/E:/KTPM/Test/src/Utils/Util.java</file>
-            <file>file:/E:/KTPM/Test/src/pojo/ComBoBox.java</file>
             <file>file:/E:/KTPM/Test/src/pojo/Book.java</file>
+            <file>file:/E:/KTPM/Test/src/HeThong/UserController.java</file>
+            <file>file:/E:/KTPM/Test/src/pojo/Sort.java</file>
+            <file>file:/E:/KTPM/Test/src/pojo/User.java</file>
+            <file>file:/E:/KTPM/Test/src/HeThong/BorrowBookController.java</file>
+            <file>file:/E:/KTPM/Test/src/Utils/JDBCconn.java</file>
         </group>
     </open-files>
 </project-private>

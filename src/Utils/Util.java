@@ -5,15 +5,20 @@
  */
 package Utils;
 
+import HeThong.BookController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.Member;
+import pojo.Sort;
 
 /**
  *
@@ -158,10 +163,27 @@ public class Util {
         
         return kq > 0;
     }
-    public static List<Book> Search (String keyword) throws SQLException{
+    public static List<Book> Search (String keyword, String timtheo) throws SQLException{
+      String s1= "Tên sách";
+      String s2= "Tác giả";
+      String s3= "Năm xuất bản";
+      String s4= "Thể loại";
+      
+       
         String sql = "SELECT * FROM book ";
-        if(!keyword.isEmpty())
-            sql+="WHERE tensach like?";
+        
+         if(!keyword.isEmpty())
+        {
+            if(s1==timtheo){
+                sql+="WHERE tensach like?";
+            }
+            else if(s2==timtheo)
+                sql+="WHERE tacgia like?";
+            else if(s3==timtheo)
+                sql+="WHERE namxuatban like?";
+            else if(s4==timtheo)
+                sql+="WHERE motasach like?";
+                
         
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
@@ -182,6 +204,8 @@ public class Util {
         
         return books;
         
+    }
+        return null;
     }
     public static Alert getAlertInfo(String content, Alert.AlertType type){
          Alert a = new Alert(type);

@@ -25,11 +25,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javax.swing.plaf.basic.BasicTreeUI;
 import pojo.Book;
 
 /**
@@ -52,6 +54,10 @@ public class BookController implements Initializable {
     @FXML TextField txttimkiem;
     @FXML TableView<Book> tbBook;
     @FXML Button btnXoa;
+    @FXML
+    private ComboBox<String> cbSort;
+    @FXML
+    private Button btSearch;
     
     
     @Override
@@ -65,16 +71,16 @@ public class BookController implements Initializable {
             System.err.println(ex.getMessage());
         }
         //Search bôk
-        this.txttimkiem.textProperty().addListener(et->{
-             this.tbBook.getItems().clear();
-             try {
-                 this.tbBook.setItems(
-                         FXCollections.observableArrayList(Util.Search(
-                                 this.txttimkiem.getText())));
-             } catch (SQLException ex) {
-                 System.err.println(ex.getMessage());
-             }
-         });
+                    ObservableList<String> options = 
+    FXCollections.observableArrayList(
+        "Tên sách",
+        "Tác giả",
+        "Năm xuất bản",
+        "Thể loại"
+    );
+        cbSort.setItems(options);
+    
+       
     }    
    
     @FXML
@@ -99,6 +105,14 @@ public class BookController implements Initializable {
         }
     }
     private void loadBook() throws SQLException {
+        
+//        ObservableList<String> options = 
+//    FXCollections.observableArrayList(
+//        "Option 1",
+//        "Option 2",
+//        "Option 3"
+//    );
+//        final ComboBox comboBox = new ComboBox(options);
        
         //TableColumn clid= new TableColumn("id ");
         TableColumn clma= new TableColumn("Mã sách ");
@@ -161,5 +175,28 @@ public class BookController implements Initializable {
     private void loadData(String kw) throws SQLException {
         tbBook.getItems().clear();
         tbBook.setItems(FXCollections.observableArrayList(Util.getBooks(kw)));
+    }
+
+
+
+ 
+    @FXML
+    private void onClick(ActionEvent event) {
+        if(!txttimkiem.toString().isEmpty() && !cbSort.getValue().toString().isEmpty())
+//            this.txttimkiem.textProperty().addListener(et->{
+             this.tbBook.getItems().clear();
+             try {
+                 String theoloai= cbSort.getValue().toString();
+                 this.tbBook.setItems(
+                         FXCollections.observableArrayList(Util.Search(
+                                 this.txttimkiem.getText(), theoloai)));
+             } catch (SQLException ex) {
+                 System.err.println(ex.getMessage());
+             }
+//         });
+    }
+
+    @FXML
+    private void cbChange(ActionEvent event) {
     }
 }
