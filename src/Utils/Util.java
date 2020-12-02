@@ -144,7 +144,8 @@ public class Util {
     }
     public static void addMember(Member m) throws SQLException{
           String sql=  "INSERT INTO thedocgia(madocgia,hoten,gioitinh,ngaysinh,"
-                       + "doituong,bophan,hanthe,email,diachi,sdt) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                       + "doituong,bophan,hanthe,email,diachi,sdt)"
+                  + " VALUES(?,?,?,?,?,?,?,?,?,?)";
             addM(m, sql);
     }
 //    
@@ -159,29 +160,34 @@ public class Util {
         return kq > 0;
     }
     public static List<Book> Search (String keyword) throws SQLException{
+        List<Book> books= new ArrayList<>();
         String sql = "SELECT * FROM book ";
-        if(!keyword.isEmpty())
-            sql+="WHERE tensach like?";
-        
+        if(keyword != null && !keyword.isEmpty())
+            {
+                sql +="WHERE masach like?" +"or tensach like?"+"or tacgia like?"+"or namxuatban like?"+"or vitri like?";  
+            }
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
-        if(!keyword.isEmpty())
-//           stm.setString(1, keyword);
-            stm.setString(1, String.format("%%%s%%", keyword));
-        
+        if(keyword != null && !keyword.trim().isEmpty())
+            
+           try {
+            stm.setString(1, String.format("%%%s%%", keyword.trim()));
+            stm.setString(2, String.format("%%%s%%", keyword.trim()));
+            stm.setString(3, String.format("%%%s%%", keyword.trim()));
+            stm.setString(4, String.format("%%%s%%", keyword.trim()));
+            stm.setString(5, String.format("%%%s%%", keyword.trim()));
+        } catch (SQLException sQLException) {}
+       
         ResultSet rs = stm.executeQuery();
         
-        List<Book> books= new ArrayList<>();
         while(rs.next()){
             Book q = new Book(rs.getInt("id"),rs.getString("masach"),
                     rs.getString("tensach"),rs.getString("tacgia"),
                     rs.getString("motasach"),rs.getString("namxuatban"),
                     rs.getString("ngaynhapsach"),rs.getString("vitri"));
             books.add(q);
-        }
-        
+        }   
         return books;
-        
     }
     public static Alert getAlertInfo(String content, Alert.AlertType type){
          Alert a = new Alert(type);

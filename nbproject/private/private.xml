@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/KTPM/Test/src/HeThong/BookController.java</file>
-            <file>file:/E:/KTPM/Test/src/Utils/Util.java</file>
-            <file>file:/E:/KTPM/Test/src/pojo/ComBoBox.java</file>
-            <file>file:/E:/KTPM/Test/src/pojo/Book.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Book.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BorrowBookController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/Util.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Member.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BookController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/JDBCconn.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/QLThuVien.java</file>
         </group>
     </open-files>
 </project-private>

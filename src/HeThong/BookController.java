@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,16 +65,19 @@ public class BookController implements Initializable {
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
-        //Search bôk
+        //Search bôok
+        
         this.txttimkiem.textProperty().addListener(et->{
              this.tbBook.getItems().clear();
              try {
                  this.tbBook.setItems(
                          FXCollections.observableArrayList(Util.Search(
                                  this.txttimkiem.getText())));
+                 
              } catch (SQLException ex) {
                  System.err.println(ex.getMessage());
              }
+            
          });
     }    
    
