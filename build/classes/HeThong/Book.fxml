@@ -1,31 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="557.0" prefWidth="896.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeThong.BookController">
-    <children>
-        <Text layoutX="25.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vị trí" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày Nhập Sách" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã Sách" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên Sách" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tác giả" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mô tả" AnchorPane.leftAnchor="25.0" />
-        <Text layoutX="25.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Năm Xuất Bản" AnchorPane.leftAnchor="25.0" />
-        <TextField fx:id="txtma" layoutX="142.0" layoutY="70.0" />
-        <TextField fx:id="txtten" layoutX="142.0" layoutY="113.0" />
-        <TextField fx:id="txttacGia" layoutX="142.0" layoutY="156.0" />
-        <TextField fx:id="txtmota" layoutX="142.0" layoutY="200.0" />
-        <TextField fx:id="txtNXB" layoutX="142.0" layoutY="249.0" />
-        <TextField fx:id="txtNgayNhapSach" layoutX="142.0" layoutY="290.0" />
-        <TextField fx:id="txtViTri" layoutX="142.0" layoutY="333.0" />
-        <Button fx:id="btnLuu" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" onAction="#addBook" text="Lưu" />
-        <Button fx:id="btnThoat" layoutX="33.0" layoutY="453.0" mnemonicParsing="false" text="Thoát" />
-        <TextField fx:id="txttimkiem" layoutX="302.0" layoutY="43.0" prefHeight="25.0" prefWidth="511.0" promptText="KeyWord" />
-        <TableView fx:id="tbBook" layoutX="311.0" layoutY="96.0" prefHeight="427.0" prefWidth="550.0" />
-        <Button fx:id="btnXoa" layoutX="142.0" layoutY="384.0" mnemonicParsing="false" text="Delete" />
-    </children>
-</AnchorPane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="929.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeThong.BookController">
+  <tabs>
+    <Tab text="Untitled Tab 1">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="607.0" prefWidth="893.0">
+               <children>
+                  <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="929.0">
+                     <children>
+                        <Text layoutX="25.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vị trí" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ngày Nhập Sách" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã Sách" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên Sách" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tác giả" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mô tả" AnchorPane.leftAnchor="25.0" />
+                        <Text layoutX="25.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Năm Xuất Bản" AnchorPane.leftAnchor="25.0" />
+                        <TextField fx:id="txtma" layoutX="142.0" layoutY="70.0" />
+                        <TextField fx:id="txtten" layoutX="142.0" layoutY="113.0" />
+                        <TextField fx:id="txttacGia" layoutX="142.0" layoutY="156.0" />
+                        <TextField fx:id="txtmota" layoutX="142.0" layoutY="200.0" />
+                        <TextField fx:id="txtNXB" layoutX="142.0" layoutY="249.0" />
+                        <TextField fx:id="txtNgayNhapSach" layoutX="142.0" layoutY="290.0" />
+                        <TextField fx:id="txtViTri" layoutX="142.0" layoutY="333.0" />
+                        <Button fx:id="btnLuu" layoutX="38.0" layoutY="384.0" mnemonicParsing="false" onAction="#addBook" text="Lưu" />
+                        <Button fx:id="btnThoat" layoutX="33.0" layoutY="453.0" mnemonicParsing="false" text="Thoát" />
+                        <TextField fx:id="txttimkiem" layoutX="357.0" layoutY="50.0" prefHeight="25.0" prefWidth="511.0" promptText="KeyWord" />
+                        <TableView fx:id="tbBook" layoutX="357.0" layoutY="101.0" prefHeight="427.0" prefWidth="550.0" />
+                        <Button layoutX="136.0" layoutY="384.0" mnemonicParsing="false" onAction="#muonSach" text="Mượn" />
+                        <Button layoutX="136.0" layoutY="453.0" mnemonicParsing="false" onAction="#traSach" text="Trả" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Untitled Tab 2">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
+               <children>
+                  <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
+                     <children>
+                        <TableView fx:id="tbmuon" layoutX="25.0" layoutY="245.0" prefHeight="312.0" prefWidth="680.0" />
+                        <Button layoutX="734.0" layoutY="212.0" mnemonicParsing="false" onAction="#muonSach" text="Mượn" />
+                        <Button layoutX="742.0" layoutY="267.0" mnemonicParsing="false" text="Trả" />
+                        <TextField fx:id="txtma1" layoutX="495.0" layoutY="44.0" promptText="ID Sách" />
+                        <TextField fx:id="txtten1" layoutX="495.0" layoutY="79.0" promptText="Tên Sách" />
+                        <HBox fx:id="member_info" layoutX="42.0" layoutY="29.0" prefHeight="100.0" prefWidth="347.0">
+                           <children>
+                              <TextField fx:id="txtIdUser" prefHeight="53.0" prefWidth="142.0" promptText="Nhập ID" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

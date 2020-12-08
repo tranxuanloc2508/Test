@@ -6,6 +6,7 @@
 package HeThong;
 
 import Utils.BookServices;
+import Utils.BorrowServices;
 import Utils.JDBCconn;
 import Utils.Util;
 import java.net.URL;
@@ -13,7 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -29,10 +32,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import pojo.Book;
+import pojo.Borrow;
 
 /**
  * FXML Controller class
@@ -53,16 +60,23 @@ public class BookController implements Initializable {
     @FXML Button btnThoat;
     @FXML TextField txttimkiem;
     @FXML TableView<Book> tbBook;
-    @FXML Button btnXoa;
+    Button btnXoa;
     
-    
+    @FXML TableView<Book> tbmuon;
+    @FXML TextField txtma1;
+    @FXML TextField txtten1;
+    @FXML TextField txtIdUser;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-            // TODO
-            //load books
+   //load books
         try {
             this.loadBook();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+          try {
+            this.loadBook1();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
@@ -80,6 +94,16 @@ public class BookController implements Initializable {
              }
             
          });
+           tbmuon.setRowFactory(evt -> {
+            TableRow row = new TableRow();
+            row.setOnMouseClicked(et -> {
+                Book b = tbmuon.getSelectionModel().getSelectedItem();
+                txtma1.setText((String.valueOf(b.getId())));
+                txtten1.setText(b.getTenSach());
+            });
+
+            return row;
+        });
     }    
    
     @FXML
@@ -102,6 +126,29 @@ public class BookController implements Initializable {
             alert.setContentText("Add Book failed!!!!" + ex.getMessage());
             alert.show();
         }
+    }
+    private void loadBook1() throws SQLException {
+
+        TableColumn clma = new TableColumn("Mã sách ");
+        TableColumn clten = new TableColumn("Tên sách ");
+        TableColumn cltg = new TableColumn("Tác giả ");
+        TableColumn clmota = new TableColumn("Mô tả ");
+        TableColumn clnam = new TableColumn("Năm xuất bản ");
+        TableColumn clnhap = new TableColumn("Ngày nhập ");
+        TableColumn clvitri = new TableColumn("Vị trí sách ");
+
+        clma.setCellValueFactory(new PropertyValueFactory("ma"));
+        clten.setCellValueFactory(new PropertyValueFactory("tenSach"));
+        cltg.setCellValueFactory(new PropertyValueFactory("tacGia"));
+        clmota.setCellValueFactory(new PropertyValueFactory("moTa"));
+        clnam.setCellValueFactory(new PropertyValueFactory("namXuatBan"));
+        clnhap.setCellValueFactory(new PropertyValueFactory("ngayNhap"));
+        clvitri.setCellValueFactory(new PropertyValueFactory("viTri"));
+//        clContent.setPrefWidth(200);
+
+        this.tbmuon.getColumns().addAll(clma, clten, cltg, clmota, clnam, clnhap, clvitri);
+        this.tbmuon.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+
     }
     private void loadBook() throws SQLException {
        
@@ -153,18 +200,43 @@ public class BookController implements Initializable {
                 });
                 
             });
-            
+   
             cell.setGraphic(btn);
             return cell;
         });
         this.tbBook.getColumns().addAll(clma,clten,cltg,clmota,clnam,clnhap,clvitri,colAction);
-        this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
-        
-            
-                    
+        this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));             
     } 
+     @FXML
+    public void muonSach(ActionEvent event) throws ParseException {
+        Random so = new Random();
+        
+        int id = so.nextInt(31);
+        
+        
+        Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), id, Integer.parseInt(txtma1.getText()));
+
+        try {
+            BorrowServices.addBorrow(b);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Add successful");
+            alert.showAndWait();
+
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Add unsuccessful" + ex.getMessage());
+                    alert.showAndWait();
+
+        }
+    }
+
     private void loadData(String kw) throws SQLException {
         tbBook.getItems().clear();
         tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks(kw)));
+    }
+
+    @FXML
+    private void traSach(ActionEvent event) {
     }
 }
