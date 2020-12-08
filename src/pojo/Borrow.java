@@ -9,28 +9,23 @@ package pojo;
  *
  * @author LocNe
  */
-public class book_thedocgia {
-    private String iddocgia,ngaymuon,ngaytra;
-    private int idbook,tien;
+public class Borrow {
+    private String ngaymuon,ngaytra;
+    private int idbook,tien,id, iddocgia;
 
-    public book_thedocgia(int idbook,String iddocgia,String ngaymuon,String ngaytra,int tien){
-        this.idbook=idbook;
-        this.iddocgia=iddocgia;
-        this.ngaymuon=ngaymuon;
-        this.ngaytra=ngaytra;
-        this.tien =tien;
-    }
-    /**
-     * @return the iddocgia
-     */
-    public String getIddocgia() {
-        return iddocgia;
+    public Borrow(int docgia,int id, int idbook) {
+        this.id = id;
+        this.idbook= idbook;
+        this.iddocgia = docgia;
+     
     }
 
-    /**
-     * @param iddocgia the iddocgia to set
-     */
-    public void setIddocgia(String iddocgia) {
+    public Borrow(String ngaymuon, String ngaytra, int idbook, int tien, int id, int iddocgia) {
+        this.ngaymuon = ngaymuon;
+        this.ngaytra = ngaytra;
+        this.idbook = idbook;
+        this.tien = tien;
+        this.id = id;
         this.iddocgia = iddocgia;
     }
 
@@ -63,9 +58,6 @@ public class book_thedocgia {
     }
 
     /**
-     * @return the tien
-
-    /**
      * @return the idbook
      */
     public int getIdbook() {
@@ -92,4 +84,35 @@ public class book_thedocgia {
     public void setTien(int tien) {
         this.tien = tien;
     }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the iddocgia
+     */
+    public int getIddocgia() {
+        return iddocgia;
+    }
+
+    /**
+     * @param iddocgia the iddocgia to set
+     */
+    public void setIddocgia(int iddocgia) {
+        this.iddocgia = iddocgia;
+    }
+
+
+    
 }

@@ -5,6 +5,7 @@
  */
 package HeThong;
 
+import Utils.BookServices;
 import Utils.JDBCconn;
 import Utils.Util;
 import java.net.URL;
@@ -71,7 +72,7 @@ public class BookController implements Initializable {
              this.tbBook.getItems().clear();
              try {
                  this.tbBook.setItems(
-                         FXCollections.observableArrayList(Util.Search(
+                         FXCollections.observableArrayList(BookServices.Search(
                                  this.txttimkiem.getText())));
                  
              } catch (SQLException ex) {
@@ -90,9 +91,9 @@ public class BookController implements Initializable {
         
         
         try {
-            Utils.Util.addBook(b);
+            Utils.BookServices.addBook(b);
             this.tbBook.getItems().clear();
-            this.tbBook.setItems(FXCollections.observableArrayList(Util.getBooks("")));
+            this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Add Book succsessful!!!!");
             alert.show();
@@ -157,13 +158,13 @@ public class BookController implements Initializable {
             return cell;
         });
         this.tbBook.getColumns().addAll(clma,clten,cltg,clmota,clnam,clnhap,clvitri,colAction);
-        this.tbBook.setItems(FXCollections.observableArrayList(Util.getBooks("")));
+        this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
         
             
                     
     } 
     private void loadData(String kw) throws SQLException {
         tbBook.getItems().clear();
-        tbBook.setItems(FXCollections.observableArrayList(Util.getBooks(kw)));
+        tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks(kw)));
     }
 }

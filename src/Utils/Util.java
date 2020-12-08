@@ -16,7 +16,7 @@ import java.util.List;
 import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.Member;
-import pojo.book_thedocgia;
+import pojo.Borrow;
 
 /**
  *
@@ -24,7 +24,7 @@ import pojo.book_thedocgia;
  */
 public class Util {
 //      public static List<book_thedocgia> getBooks_thedocgia (String keyword) throws SQLException{
-//        String sql = "SELECT * FROM book_thedocgia ";
+//        String sql = "SELECT * FROM Borrow ";
 //        
 //        Connection conn = JDBCconn.getConnection();
 //        PreparedStatement stm = conn.prepareStatement(sql);
@@ -33,7 +33,7 @@ public class Util {
 //        
 //        List<book_thedocgia> books= new ArrayList<>();
 //        while(rs.next()){
-//            book_thedocgia q = new book_thedocgia(rs.getInt("id"),rs.getString("masach"),
+//            Borrow q = new Borrow(rs.getInt("id"),rs.getString("masach"),
 //                    rs.getString("tensach"),rs.getString("tacgia"),
 //                    rs.getInt("motasach"));
 //            books.add(q);
@@ -42,25 +42,6 @@ public class Util {
 //        return books;
 //        
 //    }
-    public static List<Book> getBooks (String keyword) throws SQLException{
-        String sql = "SELECT * FROM book ";
-        Connection conn = JDBCconn.getConnection();
-        PreparedStatement stm = conn.prepareStatement(sql);
-        
-        ResultSet rs = stm.executeQuery();
-        
-        List<Book> books= new ArrayList<>();
-        while(rs.next()){
-            Book q = new Book(rs.getInt("id"),rs.getString("masach"),
-                    rs.getString("tensach"),rs.getString("tacgia"),
-                    rs.getString("motasach"),rs.getString("namxuatban"),
-                    rs.getString("ngaynhapsach"),rs.getString("vitri"));
-            books.add(q);
-        }
-        
-        return books;
-        
-    }
      public static List<Member> getMembers (String keyword) throws SQLException{
         String sql = "SELECT * FROM thedocgia ";
         
@@ -94,72 +75,7 @@ public class Util {
         return books;
         
     }
-     public static void addOrUpdateQuestion(Book book,Member b,String sql1, String sql2,String sql3) throws SQLException{
-     Connection conn = JDBCconn.getConnection();       
-         conn.setAutoCommit(false);   
-         //add Question
-         PreparedStatement stm = conn.prepareStatement(sql1);
-         
-         stm.setString(1, book.getMa());
-         stm.setString(2, book.getTenSach());
-         stm.setString(3, book.getTacGia());
-         stm.setString(4, book.getMoTa());
-         stm.setString(5, book.getNamXuatBan());
-         stm.setString(6, book.getNgayNhap());
-         stm.setString(7, book.getViTri());
-             
-         stm.executeUpdate();
-         
-         //add choice of question
-         stm.setString(1, b.getMa());
-         stm.setString(2, b.getHoten());
-         stm.setString(3, b.getGioitinh());
-         stm.setString(4, b.getNgaysinh());
-         stm.setString(5, b.getDoituong());
-         stm.setString(6, b.getBophan());
-         stm.setString(7, b.getHanthe());
-         stm.setString(8, b.getDiachi());
-         stm.setString(9, b.getEmail());
-         stm.setString(10, b.getSdt());
-         stm.executeUpdate();
-         
-         conn.commit();
-}
-     public static void browBook(Book b,Member m) throws SQLException{
-         String sql1="SELECT * FROM book";
-         String sql2 = "SELECT * FROM thedocgia ";
-         String sql = "INSERT INTO book_docgia(idbook,iddocgia) VALUES(?,?)";
-         addOrUpdateQuestion(b, m, sql1, sql2,sql);
-     }
-    public static void addorUpdateBook(Book book,String sql) throws SQLException{
-     Connection conn = JDBCconn.getConnection();
-        
-         
-         conn.setAutoCommit(false);
-         
-         //add Question
-         PreparedStatement stm = conn.prepareStatement(sql);
-         //stm.setString(1, book.getId()));
-         stm.setString(1, book.getMa());
-         stm.setString(2, book.getTenSach());
-         stm.setString(3, book.getTacGia());
-         stm.setString(4, book.getMoTa());
-         stm.setString(5, book.getNamXuatBan());
-         stm.setString(6, book.getNgayNhap());
-         stm.setString(7, book.getViTri());
-         
-         
-         stm.executeUpdate();
-         
-         
-         conn.commit();
-         }
-     public static void addBook(Book book) throws SQLException{
-         
-            String sql=  "INSERT INTO book(masach,tensach,tacgia,motasach,"
-                       + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?)";
-            addorUpdateBook(book, sql);
-     }
+
      
      public static void addM(Member b, String s) throws SQLException {
         Connection conn = JDBCconn.getConnection();
@@ -202,36 +118,7 @@ public class Util {
         
         return kq > 0;
     }
-    public static List<Book> Search (String keyword) throws SQLException{
-        List<Book> books= new ArrayList<>();
-        String sql = "SELECT * FROM book ";
-        if(keyword != null && !keyword.isEmpty())
-            {
-                sql +="WHERE masach like?" +"or tensach like?"+"or tacgia like?"+"or namxuatban like?"+"or vitri like?";  
-            }
-        Connection conn = JDBCconn.getConnection();
-        PreparedStatement stm = conn.prepareStatement(sql);
-        if(keyword != null && !keyword.trim().isEmpty())
-            
-           try {
-            stm.setString(1, String.format("%%%s%%", keyword.trim()));
-            stm.setString(2, String.format("%%%s%%", keyword.trim()));
-            stm.setString(3, String.format("%%%s%%", keyword.trim()));
-            stm.setString(4, String.format("%%%s%%", keyword.trim()));
-            stm.setString(5, String.format("%%%s%%", keyword.trim()));
-        } catch (SQLException sQLException) {}
-       
-        ResultSet rs = stm.executeQuery();
-        
-        while(rs.next()){
-            Book q = new Book(rs.getInt("id"),rs.getString("masach"),
-                    rs.getString("tensach"),rs.getString("tacgia"),
-                    rs.getString("motasach"),rs.getString("namxuatban"),
-                    rs.getString("ngaynhapsach"),rs.getString("vitri"));
-            books.add(q);
-        }   
-        return books;
-    }
+ 
     public static Alert getAlertInfo(String content, Alert.AlertType type){
          Alert a = new Alert(type);
          a.setContentText(content);
