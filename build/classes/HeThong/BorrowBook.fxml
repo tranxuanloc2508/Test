@@ -12,8 +12,8 @@
 <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HeThong.BorrowBookController">
    <children>
       <TableView fx:id="tbmuon" layoutX="25.0" layoutY="245.0" prefHeight="312.0" prefWidth="680.0" />
-      <Button fx:id="btMuon" layoutX="734.0" layoutY="212.0" mnemonicParsing="false" onAction="#muonsach" text="Mượn" />
-      <Button layoutX="742.0" layoutY="267.0" mnemonicParsing="false" text="Trả" />
+      <Button layoutX="734.0" layoutY="212.0" mnemonicParsing="false" text="Mượn" />
+      <Button layoutX="742.0" layoutY="267.0" mnemonicParsing="false" onAction="#muonSach" text="Trả" />
       <TextField fx:id="txtma" layoutX="495.0" layoutY="44.0" promptText="ID Sách" />
       <TextField fx:id="txtten" layoutX="495.0" layoutY="79.0" promptText="Tên Sách" />
       <HBox fx:id="member_info" layoutX="42.0" layoutY="29.0" prefHeight="100.0" prefWidth="347.0">
@@ -38,6 +38,5 @@
             </VBox>
          </children>
       </HBox>
-      <Button layoutX="216.0" layoutY="156.0" mnemonicParsing="false" onAction="#loadMember" text="Button" />
    </children>
 </AnchorPane>
