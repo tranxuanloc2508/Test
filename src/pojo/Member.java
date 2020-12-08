@@ -10,6 +10,7 @@ package pojo;
  * @author LocNe
  */
 public class Member {
+    private int id;
     private String ma;
     private String hoten;  
     private String gioitinh;
@@ -21,18 +22,19 @@ public class Member {
     private String diachi;
     private String sdt;
 
-//    public Member(String ma, String hoten,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
-//        this.ma = ma;
-//        this.hoten = hoten;
-////        this.gioitinh = gioitinh;
-//        this.ngaysinh = ngaysinh;
-//        this.doituong = doituong;
-//        this.bophan = bophan;
-//        this.hanthe = hanthe;
-//        this.email = email;
-//        this.diachi = diachi;
-//        this.sdt = sdt;
-//    }
+    public Member(int id,String ma, String hoten,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
+        this.ma = ma;
+        this.hoten = hoten;
+//        this.gioitinh = gioitinh;
+        this.ngaysinh = ngaysinh;
+        this.doituong = doituong;
+        this.bophan = bophan;
+        this.hanthe = hanthe;
+        this.email = email;
+        this.diachi = diachi;
+        this.sdt = sdt;
+        this.id= this.id;
+    }
     public Member(String ma, String hoten,String gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;
         this.hoten = hoten;
@@ -188,6 +190,20 @@ public class Member {
      */
     public void setGioitinh(String gioitinh) {
         this.gioitinh = gioitinh;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

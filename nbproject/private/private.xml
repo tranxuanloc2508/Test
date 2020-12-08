@@ -5,11 +5,9 @@
         <group>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Book.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BorrowBookController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/book_thedocgia.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/Util.java</file>
-            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Member.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BookController.java</file>
-            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/JDBCconn.java</file>
-            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/QLThuVien.java</file>
         </group>
     </open-files>
 </project-private>

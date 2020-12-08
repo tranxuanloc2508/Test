@@ -9,30 +9,43 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.Member;
+import pojo.book_thedocgia;
 
 /**
  *
  * @author LocNe
  */
 public class Util {
-    
+//      public static List<book_thedocgia> getBooks_thedocgia (String keyword) throws SQLException{
+//        String sql = "SELECT * FROM book_thedocgia ";
+//        
+//        Connection conn = JDBCconn.getConnection();
+//        PreparedStatement stm = conn.prepareStatement(sql);
+//        
+//        ResultSet rs = stm.executeQuery();
+//        
+//        List<book_thedocgia> books= new ArrayList<>();
+//        while(rs.next()){
+//            book_thedocgia q = new book_thedocgia(rs.getInt("id"),rs.getString("masach"),
+//                    rs.getString("tensach"),rs.getString("tacgia"),
+//                    rs.getInt("motasach"));
+//            books.add(q);
+//        }
+//        
+//        return books;
+//        
+//    }
     public static List<Book> getBooks (String keyword) throws SQLException{
         String sql = "SELECT * FROM book ";
-//        if(!keyword.isEmpty())
-//            sql+="WHERE tensach like?";
-            
-        
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
-//        if(!keyword.isEmpty())
-//           stm.setString(1, keyword);
-//            stm.setString(1, String.format("%%%s%%", keyword));
-            
         
         ResultSet rs = stm.executeQuery();
         
@@ -50,17 +63,10 @@ public class Util {
     }
      public static List<Member> getMembers (String keyword) throws SQLException{
         String sql = "SELECT * FROM thedocgia ";
-//        if(!keyword.isEmpty())
-//            sql+="WHERE tensach like?";
-            
         
         Connection conn = JDBCconn.getConnection();
         PreparedStatement stm = conn.prepareStatement(sql);
-//        if(!keyword.isEmpty())
-//           stm.setString(1, keyword);
-//            stm.setString(1, String.format("%%%s%%", keyword));
-            
-        
+
         ResultSet rs = stm.executeQuery();
         
         List<Member> books= new ArrayList<>();
@@ -88,6 +94,43 @@ public class Util {
         return books;
         
     }
+     public static void addOrUpdateQuestion(Book book,Member b,String sql1, String sql2,String sql3) throws SQLException{
+     Connection conn = JDBCconn.getConnection();       
+         conn.setAutoCommit(false);   
+         //add Question
+         PreparedStatement stm = conn.prepareStatement(sql1);
+         
+         stm.setString(1, book.getMa());
+         stm.setString(2, book.getTenSach());
+         stm.setString(3, book.getTacGia());
+         stm.setString(4, book.getMoTa());
+         stm.setString(5, book.getNamXuatBan());
+         stm.setString(6, book.getNgayNhap());
+         stm.setString(7, book.getViTri());
+             
+         stm.executeUpdate();
+         
+         //add choice of question
+         stm.setString(1, b.getMa());
+         stm.setString(2, b.getHoten());
+         stm.setString(3, b.getGioitinh());
+         stm.setString(4, b.getNgaysinh());
+         stm.setString(5, b.getDoituong());
+         stm.setString(6, b.getBophan());
+         stm.setString(7, b.getHanthe());
+         stm.setString(8, b.getDiachi());
+         stm.setString(9, b.getEmail());
+         stm.setString(10, b.getSdt());
+         stm.executeUpdate();
+         
+         conn.commit();
+}
+     public static void browBook(Book b,Member m) throws SQLException{
+         String sql1="SELECT * FROM book";
+         String sql2 = "SELECT * FROM thedocgia ";
+         String sql = "INSERT INTO book_docgia(idbook,iddocgia) VALUES(?,?)";
+         addOrUpdateQuestion(b, m, sql1, sql2,sql);
+     }
     public static void addorUpdateBook(Book book,String sql) throws SQLException{
      Connection conn = JDBCconn.getConnection();
         
@@ -195,5 +238,8 @@ public class Util {
          
          return a;
      }
+    public static void loadMuonSach(){
+    
+    }
      
 }

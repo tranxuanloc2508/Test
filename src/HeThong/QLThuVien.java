@@ -28,7 +28,7 @@ public class QLThuVien extends Application {
 
       @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Book.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("BorrowBook.fxml"));
         
         
         stage.initStyle(StageStyle.DECORATED);
