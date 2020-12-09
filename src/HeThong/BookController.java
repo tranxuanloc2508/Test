@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -66,6 +68,10 @@ public class BookController implements Initializable {
     @FXML TextField txtma1;
     @FXML TextField txtten1;
     @FXML TextField txtIdUser;
+    @FXML
+    private TableView<Borrow> tbmuon1;
+    @FXML
+    private DatePicker dateReturn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -116,7 +122,7 @@ public class BookController implements Initializable {
         
         try {
             Utils.BookServices.addBook(b);
-            this.tbBook.getItems().clear();
+            this.tbBook.getColumns().clear();
             this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Add Book succsessful!!!!");
@@ -127,8 +133,9 @@ public class BookController implements Initializable {
             alert.show();
         }
     }
-    private void loadBook1() throws SQLException {
-
+    @FXML
+    public void loadFull(ActionEvent ev) throws SQLException{
+        
         TableColumn clma = new TableColumn("Mã sách ");
         TableColumn clten = new TableColumn("Tên sách ");
         TableColumn cltg = new TableColumn("Tác giả ");
@@ -148,6 +155,31 @@ public class BookController implements Initializable {
 
         this.tbmuon.getColumns().addAll(clma, clten, cltg, clmota, clnam, clnhap, clvitri);
         this.tbmuon.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+        this.tbmuon.setVisible(true);
+        this.tbmuon1.setVisible(false);
+
+    }
+    private void loadBook1() throws SQLException {
+        
+         this.tbmuon1.getItems().clear();
+
+         TableColumn clma = new TableColumn("ID");
+        TableColumn clten = new TableColumn("IDbook");
+        TableColumn cltg = new TableColumn("IDMember");
+        TableColumn clmota = new TableColumn("Ngày mượn");
+        TableColumn clnam = new TableColumn("Ngày trả");
+        TableColumn cltien= new TableColumn("Tiền phạt");
+
+        clma.setCellValueFactory(new PropertyValueFactory("id"));
+        clten.setCellValueFactory(new PropertyValueFactory("idbook"));
+        cltg.setCellValueFactory(new PropertyValueFactory("iddocgia"));
+        clmota.setCellValueFactory(new PropertyValueFactory("ngaymuon"));
+        clnam.setCellValueFactory(new PropertyValueFactory("ngaytra"));
+        cltien.setCellValueFactory(new PropertyValueFactory("tienphat"));
+        this.tbmuon1.getColumns().clear();
+        this.tbmuon1.getColumns().addAll(clma, clten, cltg, clmota, clnam,cltien);
+        this.tbmuon1.setItems(FXCollections.observableArrayList(BorrowServices.getBorrow("")));
+        this.tbmuon.setVisible(false);
 
     }
     private void loadBook() throws SQLException {
@@ -221,6 +253,7 @@ public class BookController implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Add successful");
+            this.loadBook1();
             alert.showAndWait();
 
         } catch (SQLException ex) {
@@ -229,14 +262,42 @@ public class BookController implements Initializable {
                     alert.showAndWait();
 
         }
+        this.tbmuon1.setVisible(true);
+        this.tbmuon.setVisible(false);
     }
 
     private void loadData(String kw) throws SQLException {
-        tbBook.getItems().clear();
+        tbBook.getColumns().clear();
         tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks(kw)));
     }
 
     @FXML
-    private void traSach(ActionEvent event) {
+    private void traSach(ActionEvent event) throws ParseException {
+        Borrow b = tbmuon1.getSelectionModel().getSelectedItem();
+        String ngaymuon= b.getNgaymuon();
+        String ngaytra= dateReturn.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
+
+        Borrow bor = new Borrow(ngaymuon, ngaytra, b.getIdbook(), b.getId(), b.getIddocgia(), b.getTienphat());
+
+        try {
+            BorrowServices.returnB(b,ngaytra, ngaymuon);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("Update successful");
+            this.loadBook1();
+            alert.showAndWait();
+
+        } catch (SQLException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Update failed" + ex.getMessage());
+            alert.showAndWait();
+
+        }
+
+    }
+
+
+    @FXML
+    private void ChangeDate(ActionEvent event) {
     }
 }

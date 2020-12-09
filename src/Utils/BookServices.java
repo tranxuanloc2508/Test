@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import pojo.Book;
+import pojo.Borrow;
 import pojo.Member;
 
 /**
@@ -66,12 +67,6 @@ public class BookServices {
 
     }
 
-    public static void browBook(Book b, Member m) throws SQLException {
-//        String sql1 = "SELECT * FROM book";
-//        String sql2 = "SELECT * FROM thedocgia ";
-        String sql = "INSERT INTO book-docgia(id,idbook,iddocgia) VALUES(?,?,?)";
-         addB(b,sql);
-    }
 
     public static List<Book> getBooks(String keyword) throws SQLException {
         String sql = "SELECT * FROM book ";

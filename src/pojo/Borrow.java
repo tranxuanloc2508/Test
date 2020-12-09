@@ -10,8 +10,8 @@ package pojo;
  * @author LocNe
  */
 public class Borrow {
-    private String ngaymuon,ngaytra;
-    private int idbook,tien,id, iddocgia;
+    private String ngaymuon,ngaytra, tienphat;
+    private int idbook,id, iddocgia;
 
     public Borrow(int docgia,int id, int idbook) {
         this.id = id;
@@ -20,13 +20,13 @@ public class Borrow {
      
     }
 
-    public Borrow(String ngaymuon, String ngaytra, int idbook, int tien, int id, int iddocgia) {
+    public Borrow(String ngaymuon, String ngaytra, int idbook,int id, int iddocgia,String tienphat) {
         this.ngaymuon = ngaymuon;
         this.ngaytra = ngaytra;
         this.idbook = idbook;
-        this.tien = tien;
         this.id = id;
         this.iddocgia = iddocgia;
+        this.tienphat= tienphat;
     }
 
     /**
@@ -74,20 +74,8 @@ public class Borrow {
     /**
      * @return the tien
      */
-    public int getTien() {
-        return tien;
-    }
+ 
 
-    /**
-     * @param tien the tien to set
-     */
-    public void setTien(int tien) {
-        this.tien = tien;
-    }
-
-    /**
-     * @return the id
-     */
     public int getId() {
         return id;
     }
@@ -111,6 +99,20 @@ public class Borrow {
      */
     public void setIddocgia(int iddocgia) {
         this.iddocgia = iddocgia;
+    }
+
+    /**
+     * @return the tienphat
+     */
+    public String getTienphat() {
+        return tienphat;
+    }
+
+    /**
+     * @param tienphat the tienphat to set
+     */
+    public void setTienphat(String tienphat) {
+        this.tienphat = tienphat;
     }
 
 
