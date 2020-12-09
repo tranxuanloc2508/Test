@@ -8,11 +8,14 @@ package Utils;
 import com.sun.javafx.binding.StringFormatter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import pojo.Borrow;
 
@@ -23,19 +26,19 @@ import pojo.Borrow;
 public class BorrowServices {
 
     public static void addBorrow(Borrow b) throws SQLException, ParseException {
-        String sql = "INSERT INTO bookdocgia(id,idbook,iddocgia,ngaymuon,ngaytra) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO bookdocgia(id,idbook,iddocgia,ngaymuon) VALUES (?,?,?,?)";
         Connection conn = JDBCconn.getConnection();
         
         String c= getDateNow();
-        String d= getDateNow();
-        Random so = new Random();
-        
-        int rd = so.nextInt(35);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(sdf.parse(c));
-        cal.add(Calendar.DATE, rd);
-        d = sdf.format(cal.getTime());  // dt is now the new date
+//        String d= getDateNow();
+//        Random so = new Random();
+//        
+//        int rd = so.nextInt(35);
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(sdf.parse(c));
+//        cal.add(Calendar.DATE, rd);
+//        d = sdf.format(cal.getTime());  // dt is now the new date
         
 //        double fee= Fee(datec, d);
 
@@ -48,32 +51,80 @@ public class BorrowServices {
         stm.setInt(2, b.getIdbook());
         stm.setInt(3, b.getIddocgia());
         stm.setString(4, c);
-        stm.setString(5, d);
+      
 
         stm.executeUpdate();
         
         conn.commit();
     }
-
-//    public static void browBook(Book b, Member m) throws SQLException {
-//////        String sql1 = "SELECT * FROM b";
-//////        String sql2 = "SELECT * FROM thedocgia ";
-////         addB(b,sql);
-////    }
-    public static String getDateNow(){
-        Date date= new Date();
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+    
+    public static void returnB(Borrow b, String tra, String muon) throws ParseException, SQLException{
+        String sql= "UPDATE bookdocgia SET ngaytra=?, tienphat=? WHERE id=?";
+        Connection conn = JDBCconn.getConnection();
         
-        return format.format(date);
+         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//         dateFormat.format(tra);
+//         dateFormat.format(muon);
+
+        // Perform addition/subtraction
+        Date date1 = dateFormat.parse(muon);
+        Date date2 = dateFormat.parse(tra);
+        long diff = date2.getTime() - date1.getTime();
+        long diff1=diff/(24 * 60 * 60 * 1000);
+        
+        if (diff1 > 30) {
+            int c = (int) (5000 * (diff1-30));
+            String tien = Integer.toString(c);
+            
+            conn.setAutoCommit(false);
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setInt(3, b.getId());
+            stm.setString(2, tien);
+            stm.setString(1, tra);
+
+            stm.executeUpdate();
+
+            conn.commit();
+        } else {
+            conn.setAutoCommit(false);
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setInt(3, b.getId());
+            stm.setString(2, "0");
+            stm.setString(1, tra);
+
+            stm.executeUpdate();
+
+            conn.commit();
+        }
         
     }
-    public static double Fee(Date a, Date b){
-        int c= (int) a.getTime();
-        int d= (int) b.getTime();
+    
+     public static List<Borrow> getBorrow(String keyword) throws SQLException{
+         String sql = "SELECT * FROM bookdocgia ";
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+
+        ResultSet rs = stm.executeQuery();
+
+        List<Borrow> books = new ArrayList<>();
+        while (rs.next()) {
+            Borrow q = new Borrow(rs.getString("ngaymuon"), rs.getString("ngaytra"),
+                    rs.getInt("idbook"), rs.getInt("id"),
+                    rs.getInt("iddocgia"),rs.getString("tienphat"));
+            books.add(q);
+        }
+        return books;
+
+     }
+    public static String getDateNow(){
+        Date date= new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         
-        int chenhlech= d-c;
-        return chenhlech;
-        
+        return format.format(date);
         
     }
 }
