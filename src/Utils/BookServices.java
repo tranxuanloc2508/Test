@@ -21,32 +21,40 @@ import pojo.Member;
  */
 public class BookServices {
 
-    public static void addorUpdateBook(Book book, String sql) throws SQLException {
-        Connection conn = JDBCconn.getConnection();
+    public static boolean addorUpdateBook(Book book, String sql) throws SQLException {
+        if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
+                && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
+            Connection conn = JDBCconn.getConnection();
 
-        conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
 
-        //add Question
-        PreparedStatement stm = conn.prepareStatement(sql);
-        //stm.setString(1, book.getId()));
-        stm.setString(1, book.getMa());
-        stm.setString(2, book.getTenSach());
-        stm.setString(3, book.getTacGia());
-        stm.setString(4, book.getMoTa());
-        stm.setString(5, book.getNamXuatBan());
-        stm.setString(6, book.getNgayNhap());
-        stm.setString(7, book.getViTri());
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+            //stm.setString(1, book.getId()));
+            stm.setString(1, book.getMa());
+            stm.setString(2, book.getTenSach());
+            stm.setString(3, book.getTacGia());
+            stm.setString(4, book.getMoTa());
+            stm.setString(5, book.getNamXuatBan());
+            stm.setString(6, book.getNgayNhap());
+            stm.setString(7, book.getViTri());
 
-        stm.executeUpdate();
+            stm.executeUpdate();
 
-        conn.commit();
+            conn.commit();
+            return true;
+        }
+        return false;
+
     }
 
-    public static void addBook(Book book) throws SQLException {
+   public static boolean addBook(Book book) throws SQLException {
 
         String sql = "INSERT INTO book(masach,tensach,tacgia,motasach,"
                 + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?)";
-        addorUpdateBook(book, sql);
+        if(addorUpdateBook(book, sql))
+            return true;
+        return false;
     }
 
     public static void addB(Book book, String sql) throws SQLException {

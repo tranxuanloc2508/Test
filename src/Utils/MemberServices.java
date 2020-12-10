@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.Member;
@@ -22,7 +23,7 @@ import pojo.Borrow;
  *
  * @author LocNe
  */
-public class Util {
+public class MemberServices {
 //      public static List<book_thedocgia> getBooks_thedocgia (String keyword) throws SQLException{
 //        String sql = "SELECT * FROM Borrow ";
 //        
@@ -77,7 +78,7 @@ public class Util {
     }
 
      
-     public static void addM(Member b, String s) throws SQLException {
+ public static void addM(Member b, String s) throws SQLException {
         Connection conn = JDBCconn.getConnection();
         
          
@@ -91,11 +92,19 @@ public class Util {
          stm.setString(4, b.getNgaysinh());
          stm.setString(5, b.getDoituong());
          stm.setString(6, b.getBophan());
-         stm.setString(7, b.getHanthe());
-         stm.setString(8, b.getDiachi());
-         stm.setString(9, b.getEmail());
-         stm.setString(10, b.getSdt());
-
+         stm.setString(7, b.getDiachi());
+         stm.setString(8, b.getEmail());
+         stm.setString(9, b.getSdt());
+         
+         Random so = new Random();
+//        
+        int rd = so.nextInt(2);
+        if(rd==1)
+        {
+            stm.setString(10,"còn hạn");
+        }
+        else
+            stm.setString(10,"hết hạn");
          stm.executeUpdate();
                   
          conn.commit();
@@ -119,6 +128,50 @@ public class Util {
         return kq > 0;
     }
  
+         public static List<Member> Search(String keyword) throws SQLException {
+        List<Member> books = new ArrayList<>();
+         String sql = "SELECT * FROM thedocgia ";
+         if (keyword != null && !keyword.isEmpty()) {
+             sql += "WHERE hoten like?";
+         }
+       
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+        if (keyword != null && !keyword.trim().isEmpty())            
+           try {
+            stm.setString(1,String.format("%%%s%%",keyword.trim()));
+        } catch (SQLException sQLException) {
+        }
+
+        ResultSet rs = stm.executeQuery();
+
+        while (rs.next()) {
+            Member q = new Member(rs.getInt("id"), rs.getString("madocgia"),
+                    rs.getString("hoten"), rs.getString("gioitinh"),
+                    rs.getString("ngaysinh"), rs.getString("doituong"),
+                    rs.getString("bophan"), rs.getString("email"), rs.getString("diachi"),
+                    rs.getString("sdt"), rs.getString("hanthe"));
+            books.add(q);
+        }
+        return books;
+    }
+             public static String getDue(int m) throws SQLException
+    {
+        Connection conn = JDBCconn.getConnection();
+        String sql = "SELECT hanthe FROM thedocgia WHERE id=?";
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setInt(1, m);
+        
+        ResultSet rs = stm.executeQuery();
+        String kq = null;
+        while (rs.next()) {            
+            kq = rs.getString("hanthe");
+        }
+        return kq;
+
+        
+    }
+         
     public static Alert getAlertInfo(String content, Alert.AlertType type){
          Alert a = new Alert(type);
          a.setContentText(content);

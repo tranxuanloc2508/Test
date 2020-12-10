@@ -8,7 +8,7 @@ package HeThong;
 import Utils.BookServices;
 import Utils.BorrowServices;
 import Utils.JDBCconn;
-import Utils.Util;
+import Utils.MemberServices;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -151,6 +151,9 @@ public class BookController implements Initializable {
 
     @FXML
     public void addBook(ActionEvent event) {
+           if (!this.txtma.getText().equals("") && !this.txtNXB.getText().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
+                  && !this.txtmota.getText().equals("") && !this.txtNgayNhapSach.getText().equals("") && !this.txtViTri.getText().equals("")) {
+            
 
         Book b = new Book(this.txtma.getText(), this.txtten.getText(),
                 txttacGia.getText(), txtmota.getText(), txtNXB.getText(),
@@ -167,7 +170,12 @@ public class BookController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Add Book failed!!!!" + ex.getMessage());
             alert.show();
+        } }else {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Vui lòng nhập đủ các trường!!!");
+                alert.show();
         }
+           
     }
 
     @FXML
@@ -258,12 +266,12 @@ public class BookController implements Initializable {
 //                         TableCell c = (TableCell) b.getParent();
 //                         Book q = (Book) c.getTableRow().getItem();
                         try {
-                            Util.delBook(q.getId());
+                            MemberServices.delBook(q.getId());
 
-                            Util.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
+                            MemberServices.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
                             this.loadData("");
                         } catch (SQLException ex) {
-                            Util.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();
+                            MemberServices.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();
                             //Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);                  
                         }
                     }
@@ -278,25 +286,26 @@ public class BookController implements Initializable {
         this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
     }
 
-    @FXML
-    public void muonSach(ActionEvent event) throws ParseException {
-//        Random so = new Random();
-//        
-//        int id = so.nextInt(31);
+    public void muonSach(ActionEvent event) throws ParseException, SQLException {
 
         Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
+        if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
+            try {
+                BorrowServices.addBorrow(b);
 
-        try {
-            BorrowServices.addBorrow(b);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Add successful");
+                this.loadBook1();
+                alert.showAndWait();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Borrow Book successful");
-            this.loadBook1();
-            alert.showAndWait();
-
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Add unsuccessful" + ex.getMessage());
+                alert.showAndWait();
+            }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Borrow Book unsuccessful" + ex.getMessage());
+            alert.setContentText("Hết hạn thẻ");
             alert.showAndWait();
 
         }
