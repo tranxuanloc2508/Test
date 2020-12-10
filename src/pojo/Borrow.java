@@ -19,6 +19,12 @@ public class Borrow {
         this.iddocgia = docgia;
      
     }
+       public Borrow(int docgia, int idbook) {
+        
+        this.idbook= idbook;
+        this.iddocgia = docgia;
+     
+    }
 
     public Borrow(String ngaymuon, String ngaytra, int idbook,int id, int iddocgia,String tienphat) {
         this.ngaymuon = ngaymuon;

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -57,6 +58,34 @@
                         <Button layoutX="51.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadFull" text="Book List" />
                         <TableView fx:id="tbmuon1" layoutX="35.0" layoutY="255.0" prefHeight="312.0" prefWidth="577.0" />
                         <DatePicker fx:id="dateReturn" layoutX="205.0" layoutY="154.0" onAction="#ChangeDate" />
+                        <TextField fx:id="txtTongTien" layoutX="653.0" layoutY="424.0" />
+                        <Button layoutX="702.0" layoutY="486.0" mnemonicParsing="false" onAction="#tongTien" text="Button" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+     <Tab onSelectionChanged="#Loaddata" text="BorrowBookReturns">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
+               <children>
+                  <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
+                     <children>
+                        <ListView fx:id="listViewData" layoutX="146.0" layoutY="113.0" prefHeight="368.0" prefWidth="580.0" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+         <Tab onSelectionChanged="#Loaddata" text="BorrowBookReturns">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
+               <children>
+                  <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
+                     <children>
+                        <ListView fx:id="listViewData1" layoutX="146.0" layoutY="113.0" prefHeight="368.0" prefWidth="580.0" />
+                        <TextField fx:id="txtLoadMember" layoutX="287.0" layoutY="65.0" onAction="#loadmember" />
+                        <Button layoutX="498.0" layoutY="53.0" mnemonicParsing="false" text="Button" />
                      </children>
                   </AnchorPane>
                </children></AnchorPane>

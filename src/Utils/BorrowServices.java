@@ -81,7 +81,7 @@ public class BorrowServices {
             PreparedStatement stm = conn.prepareStatement(sql);
 
             stm.setInt(3, b.getId());
-            stm.setString(2, tien);
+            stm.setString(2, tien + "VND");
             stm.setString(1, tra);
 
             stm.executeUpdate();
@@ -126,5 +126,18 @@ public class BorrowServices {
         
         return format.format(date);
         
+    }
+    public static void total(String a) throws SQLException{
+         String sql = "SELECT SUM(tienphat) FROM mytable ";
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+       
+        ResultSet rs = stm.executeQuery();
+          while (rs.next()) {
+              {
+                  int c = rs.getInt(1);
+                     int sum = 0;
+                    sum = sum + c;
+              }}
     }
 }

@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Test/src/HeThong/BookController.java</file>
-            <file>file:/E:/Test/src/Utils/JDBCconn.java</file>
-            <file>file:/E:/Test/src/Utils/BookServices.java</file>
-            <file>file:/E:/Test/src/pojo/Borrow.java</file>
-            <file>file:/E:/Test/src/Utils/Util.java</file>
-            <file>file:/E:/Test/src/HeThong/QLThuVien.java</file>
-            <file>file:/E:/Test/src/Utils/BorrowServices.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/BorrowServices.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/test/NewClass.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/test/NewEmptyJUnitTest.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/Util.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BookController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/JDBCconn.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/QLThuVien.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Borrow.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/test/BookTes.java</file>
         </group>
     </open-files>
 </project-private>
