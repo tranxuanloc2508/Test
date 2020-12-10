@@ -91,8 +91,6 @@ public class BookController implements Initializable {
     @FXML
     private DatePicker dateReturn;
     @FXML
-    private TextField txtTongTien;
-    @FXML
     private ListView<String> listViewData;
     @FXML
     private ListView<String> listViewData1;
@@ -136,18 +134,23 @@ public class BookController implements Initializable {
 
             return row;
         });
+        tbBook.setRowFactory(evt -> {
+            TableRow row = new TableRow();
+            row.setOnMouseClicked(et -> {
+                Book b = tbBook.getSelectionModel().getSelectedItem();
+                txtma.setText(b.getMa());
+                txtten.setText(b.getTenSach());
+                txttacGia.setText(b.getTacGia());
+                txtmota.setText(b.getMoTa());
+                txtNXB.setText(b.getNamXuatBan());
+                txtNgayNhapSach.setText(b.getNgayNhap());
+                txtViTri.setText(b.getViTri());
 
-//           int sum = 0;
-//
-//                for (int i = 0; i < tbmuon1.getItems().size(); i++) {
-//                    sum = sum + Integer.parseInt(tbmuon1.getValueAt(i, 1).toString());
-//                }
-//
-//                txtTongTien.setText(String.valueOf(sum));
+            });
+
+            return row;
+        });
     }
-//   public void totalB(ActionEvent event){
-//   
-//       String a = tbmuon1.getRowFactory().toString();
 
     @FXML
     public void addBook(ActionEvent event) {
@@ -348,11 +351,6 @@ public class BookController implements Initializable {
     }
 
     @FXML
-    private void tongTien(ActionEvent event) throws SQLException {
-
-    }
-
-    @FXML
     private void Loaddata(Event event) throws SQLException {
         ObservableList<String> issueData = FXCollections.observableArrayList();
         String sql = "Select sum(tienphat) from bookdocgia";
@@ -370,6 +368,14 @@ public class BookController implements Initializable {
         if (rs1.next()) {
             String a = rs1.getString("count(id)");
             issueData.add("Số quyển sách đã mượn là :" + a);
+        }
+
+        String sql2 = "Select count(ngaytra) from bookdocgia";
+        PreparedStatement stm2 = conn.prepareStatement(sql2);
+        ResultSet rs2 = stm2.executeQuery();
+        if (rs2.next()) {
+            String a = rs2.getString("count(ngaytra)");
+            issueData.add("Số quyển sách đã trả là :" + a);
         }
         listViewData.getItems().setAll(issueData);
     }
@@ -392,19 +398,48 @@ public class BookController implements Initializable {
                 String a2 = rs.getString("hoten");
                 String a3 = rs.getString("gioitinh");
                 String a4 = rs.getString("ngaysinh");
-                String a5 = rs.getString("hanthe");
-                
-                issueData.add("ID là :" + a);
-                issueData.add("Mã Độc giả:" + a1);
-                issueData.add("Họ Tên :" + a2);
-                issueData.add("Giới Tính :" + a3);
-                issueData.add("Ngày Sinh:" + a4);
-                issueData.add(" Hạn Thẻ:" + a5);
-                
+                String a5 = rs.getString("doituong");
+                String a6 = rs.getString("bophan");
+                String a7 = rs.getString("email");
+                String a8 = rs.getString("diachi");
+                String a9 = rs.getString("sdt");
+                String a10 = rs.getString("hanthe");
+
+                issueData.add("ID là : " + a);
+                issueData.add("Mã Độc giả: " + a1);
+                issueData.add("Họ Tên : " + a2);
+                issueData.add("Giới Tính : " + a3);
+                issueData.add("Ngày Sinh: " + a4);
+                issueData.add("Đối tượng: " + a5);
+                issueData.add("Bộ Phận " + a6);
+                issueData.add("Email : " + a7);
+                issueData.add("Giới Tính :" + a8);
+                issueData.add("Địa chỉ: " + a9);
+                issueData.add("Hạn Thẻ: " + a10);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
         }
         listViewData1.getItems().setAll(issueData);
+    }
+
+    @FXML
+    private void updateB(ActionEvent event) {
+        Book q = this.tbBook.getSelectionModel().getSelectedItem();
+        if (q != null) {
+            try {
+                BookServices.updateBook(q);
+
+                this.tbBook.getItems().clear();
+                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+
+                BookServices.getAlertInfo("Update question successfully",
+                        Alert.AlertType.INFORMATION).show();
+            } catch (SQLException ex) {
+                BookServices.getAlertInfo("Update question faild" + ex.getMessage(),
+                        Alert.AlertType.ERROR).show();
+            }
+        }
     }
 }

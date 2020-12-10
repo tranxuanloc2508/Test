@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Alert;
 import pojo.Book;
 import pojo.Borrow;
 import pojo.Member;
@@ -55,6 +56,12 @@ public class BookServices {
         if(addorUpdateBook(book, sql))
             return true;
         return false;
+    }
+     public static void updateBook(Book book) throws SQLException {
+
+        String sql = "UPDATE Book Set masach=?,tensach=?,tacgia=?,motasach=?,"
+                + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
+        addorUpdateBook(book, sql);
     }
 
     public static void addB(Book book, String sql) throws SQLException {
@@ -126,4 +133,10 @@ public class BookServices {
         }
         return books;
     }
+    public static Alert getAlertInfo(String content, Alert.AlertType type){
+         Alert a = new Alert(type);
+         a.setContentText(content);
+         
+         return a;
+     }
 }
