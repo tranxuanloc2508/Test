@@ -36,8 +36,8 @@
                         <Button fx:id="btnThoat" layoutX="33.0" layoutY="453.0" mnemonicParsing="false" text="Thoát" />
                         <TextField fx:id="txttimkiem" layoutX="357.0" layoutY="50.0" prefHeight="25.0" prefWidth="511.0" promptText="KeyWord" />
                         <TableView fx:id="tbBook" layoutX="357.0" layoutY="101.0" prefHeight="427.0" prefWidth="550.0" />
-                        <Button layoutX="136.0" layoutY="384.0" mnemonicParsing="false" onAction="#muonSach" text="Mượn" />
-                        <Button layoutX="136.0" layoutY="453.0" mnemonicParsing="false" onAction="#traSach" text="Trả" />
+                        <Button layoutX="136.0" layoutY="384.0" mnemonicParsing="false" onAction="#updateB" text="Cập Nhật" />
+                        <Button layoutX="136.0" layoutY="453.0" mnemonicParsing="false" text="Trả" />
                      </children>
                   </AnchorPane>
                </children></AnchorPane>
@@ -50,42 +50,42 @@
                   <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
                      <children>
                         <TableView fx:id="tbmuon" layoutX="25.0" layoutY="245.0" prefHeight="312.0" prefWidth="577.0" />
-                        <Button layoutX="734.0" layoutY="212.0" mnemonicParsing="false" onAction="#muonSach" text="Mượn" />
-                        <Button layoutX="742.0" layoutY="267.0" mnemonicParsing="false" onAction="#traSach" text="Trả" />
+                        <Button layoutX="637.0" layoutY="344.0" mnemonicParsing="false" onAction="#muonSach" text="Mượn" />
+                        <Button layoutX="644.0" layoutY="436.0" mnemonicParsing="false" onAction="#traSach" text="Trả" />
                         <TextField fx:id="txtma1" layoutX="495.0" layoutY="44.0" promptText="ID Sách" />
                         <TextField fx:id="txtten1" layoutX="495.0" layoutY="79.0" promptText="Tên Sách" />
                         <TextField fx:id="txtIdUser" layoutX="51.0" layoutY="30.0" prefHeight="53.0" prefWidth="142.0" promptText="Nhập ID" />
                         <Button layoutX="51.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadFull" text="Book List" />
                         <TableView fx:id="tbmuon1" layoutX="35.0" layoutY="255.0" prefHeight="312.0" prefWidth="577.0" />
-                        <DatePicker fx:id="dateReturn" layoutX="205.0" layoutY="154.0" onAction="#ChangeDate" />
-                        <TextField fx:id="txtTongTien" layoutX="653.0" layoutY="424.0" />
-                        <Button layoutX="702.0" layoutY="486.0" mnemonicParsing="false" onAction="#tongTien" text="Button" />
+                        <DatePicker fx:id="dateReturn" layoutX="689.0" layoutY="436.0" onAction="#ChangeDate" />
+                        <Text layoutX="689.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập ngày trả" />
                      </children>
                   </AnchorPane>
                </children></AnchorPane>
       </content>
     </Tab>
-     <Tab onSelectionChanged="#Loaddata" text="BorrowBookReturns">
+     <Tab onSelectionChanged="#Loaddata" text="Statistical">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
                <children>
                   <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
                      <children>
-                        <ListView fx:id="listViewData" layoutX="146.0" layoutY="113.0" prefHeight="368.0" prefWidth="580.0" />
+                        <ListView fx:id="listViewData" layoutX="95.0" layoutY="94.0" prefHeight="387.0" prefWidth="631.0" />
+                        <Text layoutX="321.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BẢNG THỐNG KÊ " />
                      </children>
                   </AnchorPane>
                </children></AnchorPane>
       </content>
     </Tab>
-         <Tab onSelectionChanged="#Loaddata" text="BorrowBookReturns">
+         <Tab onSelectionChanged="#Loaddata" text="FindMember">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
                <children>
                   <AnchorPane id="AnchorPane" prefHeight="608.0" prefWidth="816.0">
                      <children>
-                        <ListView fx:id="listViewData1" layoutX="146.0" layoutY="113.0" prefHeight="368.0" prefWidth="580.0" />
-                        <TextField fx:id="txtLoadMember" layoutX="287.0" layoutY="65.0" onAction="#loadmember" />
-                        <Button layoutX="498.0" layoutY="53.0" mnemonicParsing="false" text="Button" />
+                        <ListView fx:id="listViewData1" layoutX="146.0" layoutY="113.0" prefHeight="422.0" prefWidth="638.0" />
+                        <TextField fx:id="txtLoadMember" layoutX="195.0" layoutY="40.0" onAction="#loadmember" promptText="IDMember...." />
+                        <Text layoutX="135.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập ID " />
                      </children>
                   </AnchorPane>
                </children></AnchorPane>
