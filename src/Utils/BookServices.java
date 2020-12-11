@@ -29,14 +29,14 @@ public class BookServices {
 
         //add Question
         PreparedStatement stm = conn.prepareStatement(sql);
-        //stm.setString(1, book.getId()));
-        stm.setString(1, book.getMa());
-        stm.setString(2, book.getTenSach());
-        stm.setString(3, book.getTacGia());
-        stm.setString(4, book.getMoTa());
-        stm.setString(5, book.getNamXuatBan());
-        stm.setString(6, book.getNgayNhap());
-        stm.setString(7, book.getViTri());
+        stm.setInt(1,book.getId());
+        stm.setString(2, book.getMa());
+        stm.setString(3, book.getTenSach());
+        stm.setString(4, book.getTacGia());
+        stm.setString(5, book.getMoTa());
+        stm.setString(6, book.getNamXuatBan());
+        stm.setString(7, book.getNgayNhap());
+        stm.setString(8, book.getViTri());
 
         stm.executeUpdate();
 
