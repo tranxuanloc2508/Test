@@ -8,7 +8,7 @@ package HeThong;
 import Utils.BookServices;
 import Utils.BorrowServices;
 import Utils.JDBCconn;
-import Utils.Util;
+import Utils.MemberServices;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,6 +44,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import pojo.Book;
 import pojo.Borrow;
+import pojo.Member;
 
 /**
  * FXML Controller class
@@ -96,6 +97,10 @@ public class BookController implements Initializable {
     private ListView<String> listViewData1;
     @FXML
     private TextField txtLoadMember;
+    @FXML
+    private TableView<Member> tbMem;
+    @FXML
+    private Button btFullMem;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -107,6 +112,11 @@ public class BookController implements Initializable {
         }
         try {
             this.loadBook1();
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        try {
+            this.loadMem1();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
@@ -124,6 +134,20 @@ public class BookController implements Initializable {
             }
 
         });
+        // Search Member
+        this.txtLoadMember.textProperty().addListener(et -> {
+
+            this.tbMem.getItems().clear();
+            try {
+                this.tbMem.setItems(
+                        FXCollections.observableArrayList(MemberServices.Search(
+                                this.txtLoadMember.getText())));
+
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        });
+        //Lấy thông tin
         tbmuon.setRowFactory(evt -> {
             TableRow row = new TableRow();
             row.setOnMouseClicked(et -> {
@@ -134,6 +158,7 @@ public class BookController implements Initializable {
 
             return row;
         });
+        //lấy thông tin sách
         tbBook.setRowFactory(evt -> {
             TableRow row = new TableRow();
             row.setOnMouseClicked(et -> {
@@ -154,23 +179,31 @@ public class BookController implements Initializable {
 
     @FXML
     public void addBook(ActionEvent event) {
+        if (!this.txtma.getText().equals("") && !this.txtNXB.getText().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
+                && !this.txtmota.getText().equals("") && !this.txtNgayNhapSach.getText().equals("") && !this.txtViTri.getText().equals("")) {
 
-        Book b = new Book(this.txtma.getText(), this.txtten.getText(),
-                txttacGia.getText(), txtmota.getText(), txtNXB.getText(),
-                txtNgayNhapSach.getText(), txtViTri.getText());
+            Book b = new Book(this.txtma.getText(), this.txtten.getText(),
+                    txttacGia.getText(), txtmota.getText(), txtNXB.getText(),
+                    txtNgayNhapSach.getText(), txtViTri.getText());
 
-        try {
-            Utils.BookServices.addBook(b);
-            this.tbBook.getColumns().clear();
-            this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Add Book succsessful!!!!");
-            alert.show();
-        } catch (SQLException ex) {
+            try {
+                Utils.BookServices.addBook(b);
+                this.tbBook.getColumns().clear();
+                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Add Book succsessful!!!!");
+                alert.show();
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Add Book failed!!!!" + ex.getMessage());
+                alert.show();
+            }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Add Book failed!!!!" + ex.getMessage());
+            alert.setContentText("Vui lòng nhập đủ các trường!!!");
             alert.show();
         }
+
     }
 
     @FXML
@@ -257,17 +290,14 @@ public class BookController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Bạn chắc chắn xóa? ");
                 alert.showAndWait().ifPresent(res -> {
-                    if (res == ButtonType.OK) {
-//                         TableCell c = (TableCell) b.getParent();
-//                         Book q = (Book) c.getTableRow().getItem();
+                    if (res == ButtonType.OK) {           
                         try {
-                            Util.delBook(q.getId());
+                            MemberServices.delBook(q.getId());
 
-                            Util.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
+                            MemberServices.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
                             this.loadData("");
                         } catch (SQLException ex) {
-                            Util.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();
-                            //Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);                  
+                            MemberServices.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();                 
                         }
                     }
                 });
@@ -282,24 +312,26 @@ public class BookController implements Initializable {
     }
 
     @FXML
-    public void muonSach(ActionEvent event) throws ParseException {
-//        Random so = new Random();
-//        
-//        int id = so.nextInt(31);
+    public void muonSach(ActionEvent event) throws ParseException, SQLException {
 
         Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
+        if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
+            try {
+                BorrowServices.addBorrow(b);
 
-        try {
-            BorrowServices.addBorrow(b);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Add successful");
+                this.loadBook1();
+                alert.showAndWait();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Borrow Book successful");
-            this.loadBook1();
-            alert.showAndWait();
-
-        } catch (SQLException ex) {
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Add unsuccessful" + ex.getMessage());
+                alert.showAndWait();
+            }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Borrow Book unsuccessful" + ex.getMessage());
+            alert.setContentText("Hết hạn thẻ");
             alert.showAndWait();
 
         }
@@ -338,42 +370,11 @@ public class BookController implements Initializable {
     }
 
     @FXML
-    private void ChangeDate(ActionEvent event) {
-    }
-
-    @FXML
-    private void Loaddata(Event event) throws SQLException {
+    private void loadMemberCard(ActionEvent event) throws SQLException {
         ObservableList<String> issueData = FXCollections.observableArrayList();
-        String sql = "Select sum(tienphat) from bookdocgia";
-        Connection conn = JDBCconn.getConnection();
-        PreparedStatement stm = conn.prepareStatement(sql);
-        ResultSet rs = stm.executeQuery();
-        if (rs.next()) {
-            String a = rs.getString("sum(tienphat)");
-            issueData.add("Tổng tiền phạt đã nhận là :" + a);
-        }
+        Member b = tbMem.getSelectionModel().getSelectedItem();
+        txtLoadMember.setText((String.valueOf(b.getId())));
 
-        String sql1 = "Select count(id) from bookdocgia";
-        PreparedStatement stm1 = conn.prepareStatement(sql1);
-        ResultSet rs1 = stm1.executeQuery();
-        if (rs1.next()) {
-            String a = rs1.getString("count(id)");
-            issueData.add("Số quyển sách đã mượn là :" + a);
-        }
-
-        String sql2 = "Select count(ngaytra) from bookdocgia";
-        PreparedStatement stm2 = conn.prepareStatement(sql2);
-        ResultSet rs2 = stm2.executeQuery();
-        if (rs2.next()) {
-            String a = rs2.getString("count(ngaytra)");
-            issueData.add("Số quyển sách đã trả là :" + a);
-        }
-        listViewData.getItems().setAll(issueData);
-    }
-
-    @FXML
-    private void loadmember(ActionEvent event) throws SQLException {
-        ObservableList<String> issueData = FXCollections.observableArrayList();
         String id = txtLoadMember.getText();
         String sql = "Select * from thedocgia where id='" + id + "'";
         Connection conn = JDBCconn.getConnection();
@@ -384,7 +385,7 @@ public class BookController implements Initializable {
 
         try {
             while (rs.next()) {
-                String a = id;
+                String a = rs.getString("id");
                 String a1 = rs.getString("madocgia");
                 String a2 = rs.getString("hoten");
                 String a3 = rs.getString("gioitinh");
@@ -413,6 +414,73 @@ public class BookController implements Initializable {
             Logger.getLogger(BookController.class.getName()).log(Level.SEVERE, null, ex);
         }
         listViewData1.getItems().setAll(issueData);
+        tbMem.setVisible(false);
+    }
+
+    private void loadMem1() throws SQLException {
+        this.tbMem.getItems().clear();
+
+        TableColumn clma = new TableColumn("ID");
+        TableColumn clten = new TableColumn("Mã độc giả");
+        TableColumn cltg = new TableColumn("Họ tên");
+        TableColumn clmota = new TableColumn("Giới tính");
+        TableColumn clnam = new TableColumn("Ngày sinh");
+        TableColumn cltien = new TableColumn("Đối tượng");
+        TableColumn cltien1 = new TableColumn("Bộ phận");
+        TableColumn cltien2 = new TableColumn("Email");
+        TableColumn cltien3 = new TableColumn("Địa chỉ");
+        TableColumn cltien4 = new TableColumn("Sđt");
+        TableColumn cltien5 = new TableColumn("Hạn thẻ");
+
+        clma.setCellValueFactory(new PropertyValueFactory("id"));
+        clten.setCellValueFactory(new PropertyValueFactory("ma"));
+        cltg.setCellValueFactory(new PropertyValueFactory("hoten"));
+        clmota.setCellValueFactory(new PropertyValueFactory("gioitinh"));
+        clnam.setCellValueFactory(new PropertyValueFactory("ngaysinh"));
+        cltien.setCellValueFactory(new PropertyValueFactory("doituong"));
+        cltien1.setCellValueFactory(new PropertyValueFactory("bophan"));
+        cltien2.setCellValueFactory(new PropertyValueFactory("email"));
+        cltien3.setCellValueFactory(new PropertyValueFactory("diachi"));
+        cltien4.setCellValueFactory(new PropertyValueFactory("sdt"));
+        cltien5.setCellValueFactory(new PropertyValueFactory("hanthe"));
+
+        this.tbMem.getColumns().clear();
+        this.tbMem.getColumns().addAll(clma, clten, cltg, clmota, clnam, cltien, cltien1, cltien2, cltien3, cltien4, cltien5);
+        this.tbMem.setItems(FXCollections.observableArrayList(MemberServices.getMembers("")));
+    }
+
+    @FXML
+    public void loadMem(ActionEvent e) throws SQLException {
+        this.tbMem.getItems().clear();
+
+        TableColumn clma = new TableColumn("ID");
+        TableColumn clten = new TableColumn("Mã độc giả");
+        TableColumn cltg = new TableColumn("Họ tên");
+        TableColumn clmota = new TableColumn("Giới tính");
+        TableColumn clnam = new TableColumn("Ngày sinh");
+        TableColumn cltien = new TableColumn("Đối tượng");
+        TableColumn cltien1 = new TableColumn("Bộ phận");
+        TableColumn cltien2 = new TableColumn("Email");
+        TableColumn cltien3 = new TableColumn("Địa chỉ");
+        TableColumn cltien4 = new TableColumn("Sđt");
+        TableColumn cltien5 = new TableColumn("Hạn thẻ");
+
+        clma.setCellValueFactory(new PropertyValueFactory("id"));
+        clten.setCellValueFactory(new PropertyValueFactory("ma"));
+        cltg.setCellValueFactory(new PropertyValueFactory("hoten"));
+        clmota.setCellValueFactory(new PropertyValueFactory("gioitinh"));
+        clnam.setCellValueFactory(new PropertyValueFactory("ngaysinh"));
+        cltien.setCellValueFactory(new PropertyValueFactory("doituong"));
+        cltien1.setCellValueFactory(new PropertyValueFactory("bophan"));
+        cltien2.setCellValueFactory(new PropertyValueFactory("email"));
+        cltien3.setCellValueFactory(new PropertyValueFactory("diachi"));
+        cltien4.setCellValueFactory(new PropertyValueFactory("sdt"));
+        cltien5.setCellValueFactory(new PropertyValueFactory("hanthe"));
+
+        this.tbMem.getColumns().clear();
+        this.tbMem.getColumns().addAll(clma, clten, cltg, clmota, clnam, cltien, cltien1, cltien2, cltien3, cltien4, cltien5);
+        this.tbMem.setItems(FXCollections.observableArrayList(MemberServices.getMembers("")));
+        this.tbMem.setVisible(true);
     }
 
     @FXML
@@ -425,12 +493,46 @@ public class BookController implements Initializable {
                 this.tbBook.getItems().clear();
                 this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
 
-                BookServices.getAlertInfo("Update question successfully",
+                BookServices.getAlertInfo("Update successfully",
                         Alert.AlertType.INFORMATION).show();
             } catch (SQLException ex) {
-                BookServices.getAlertInfo("Update question faild" + ex.getMessage(),
+                BookServices.getAlertInfo("Update failed" + ex.getMessage(),
                         Alert.AlertType.ERROR).show();
             }
         }
+    }
+
+    @FXML
+    private void Loaddata(Event event) {
+    }
+
+    @FXML
+    private void loadThongKe(Event event) throws SQLException {
+        ObservableList<String> issueData = FXCollections.observableArrayList();
+        String sql = "Select sum(tienphat) from bookdocgia";
+        Connection conn = JDBCconn.getConnection();
+        PreparedStatement stm = conn.prepareStatement(sql);
+        ResultSet rs = stm.executeQuery();
+        if (rs.next()) {
+            String a = rs.getString("sum(tienphat)");
+            issueData.add("Tổng tiền phạt đã nhận là : " + a);
+        }
+
+        String sql1 = "Select count(id) from bookdocgia";
+        PreparedStatement stm1 = conn.prepareStatement(sql1);
+        ResultSet rs1 = stm1.executeQuery();
+        if (rs1.next()) {
+            String a = rs1.getString("count(id)");
+            issueData.add("Số quyển sách đã mượn là :" + a);
+        }
+
+        String sql2 = "Select count(ngaytra) from bookdocgia";
+        PreparedStatement stm2 = conn.prepareStatement(sql2);
+        ResultSet rs2 = stm2.executeQuery();
+        if (rs2.next()) {
+            String a = rs2.getString("count(ngaytra)");
+            issueData.add("Số quyển sách đã trả là :" + a);
+        }
+        listViewData.getItems().setAll(issueData);
     }
 }

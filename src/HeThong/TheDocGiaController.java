@@ -61,7 +61,7 @@ public class TheDocGiaController implements Initializable {
         
 //        cbGioiTinh.getSelectionModel().getSelectedItem()
         try {
-            Utils.Util.addMember(b);
+            Utils.MemberServices.addMember(b);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Add member succsessful!!!!");
             alert.show();

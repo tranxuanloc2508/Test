@@ -30,18 +30,6 @@ public class BorrowServices {
         Connection conn = JDBCconn.getConnection();
         
         String c= getDateNow();
-//        String d= getDateNow();
-//        Random so = new Random();
-//        
-//        int rd = so.nextInt(35);
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(sdf.parse(c));
-//        cal.add(Calendar.DATE, rd);
-//        d = sdf.format(cal.getTime());  // dt is now the new date
-        
-//        double fee= Fee(datec, d);
-
 
         conn.setAutoCommit(false);
         //add Question

@@ -63,7 +63,7 @@ public class UserController implements Initializable {
                     stage.setMaximized(true);
                     stage.close();
                     Scene scence = new Scene(FXMLLoader.load(getClass().getResource(
-                            "TheDocGia.fxml")));
+                            "Book.fxml")));
                     stage.setScene(scence);
                     stage.show();
 //                    Parent root = FXMLLoader.load(getClass().getResource("TheDocGia.fxml"));
