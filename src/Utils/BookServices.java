@@ -22,7 +22,7 @@ import pojo.Member;
  */
 public class BookServices {
 
-    public static boolean addorUpdateBook(Book book, String sql) throws SQLException {
+    public static boolean addBookk(Book book, String sql) throws SQLException {
         if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
                 && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
             Connection conn = JDBCconn.getConnection();
@@ -53,15 +53,45 @@ public class BookServices {
 
         String sql = "INSERT INTO book(masach,tensach,tacgia,motasach,"
                 + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?)";
-        if(addorUpdateBook(book, sql))
+        if(addBookk(book, sql))
             return true;
         return false;
+    }
+   
+   public static boolean update(Book book, String sql) throws SQLException {
+        if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
+                && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
+            Connection conn = JDBCconn.getConnection();
+
+            conn.setAutoCommit(false);
+
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+            //stm.setString(1, book.getId()));
+            stm.setString(1, book.getMa());
+            stm.setString(2, book.getTenSach());
+            stm.setString(3, book.getTacGia());
+            stm.setString(4, book.getMoTa());
+            stm.setString(5, book.getNamXuatBan());
+            stm.setString(6, book.getNgayNhap());
+            stm.setString(7, book.getViTri());
+            stm.setInt(8, book.getId());
+            
+
+
+            stm.executeUpdate();
+
+            conn.commit();
+            return true;
+        }
+        return false;
+
     }
      public static void updateBook(Book book) throws SQLException {
 
         String sql = "UPDATE Book Set masach=?,tensach=?,tacgia=?,motasach=?,"
                 + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
-        addorUpdateBook(book, sql);
+        update(book, sql);
     }
 
     public static void addB(Book book, String sql) throws SQLException {

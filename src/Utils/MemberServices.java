@@ -53,7 +53,7 @@ public class MemberServices {
         
         List<Member> books= new ArrayList<>();
         while(rs.next()){
-            String id = rs.getString("id");
+            int id = rs.getInt("id");
             String ma = rs.getString("madocgia");
             String hoten = rs.getString("hoten");
             String gioitinh = rs.getString("gioitinh");
@@ -65,7 +65,7 @@ public class MemberServices {
             String diachi = rs.getString("diachi");
             String sdt = rs.getString("sdt");
             
-            Member q = new Member(ma, hoten, gioitinh, ngaysinh, doituong, bophan, hanthe, email, diachi, sdt);
+            Member q = new Member(id ,ma, hoten, gioitinh, ngaysinh, doituong, bophan, hanthe, email, diachi, sdt);
             
             books.add(q);
             

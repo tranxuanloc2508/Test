@@ -33,7 +33,7 @@ public class Member {
         this.email = email;
         this.diachi = diachi;
         this.sdt = sdt;
-        this.id= this.id;
+        this.id= id;
     }
     public Member(String ma, String hoten,String gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;
