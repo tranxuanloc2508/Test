@@ -30,18 +30,6 @@ public class BorrowServices {
         Connection conn = JDBCconn.getConnection();
         
         String c= getDateNow();
-//        String d= getDateNow();
-//        Random so = new Random();
-//        
-//        int rd = so.nextInt(35);
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(sdf.parse(c));
-//        cal.add(Calendar.DATE, rd);
-//        d = sdf.format(cal.getTime());  // dt is now the new date
-        
-//        double fee= Fee(datec, d);
-
 
         conn.setAutoCommit(false);
         //add Question
@@ -127,17 +115,5 @@ public class BorrowServices {
         return format.format(date);
         
     }
-    public static void total(String a) throws SQLException{
-         String sql = "SELECT SUM(tienphat) FROM mytable ";
-        Connection conn = JDBCconn.getConnection();
-        PreparedStatement stm = conn.prepareStatement(sql);
-       
-        ResultSet rs = stm.executeQuery();
-          while (rs.next()) {
-              {
-                  int c = rs.getInt(1);
-                     int sum = 0;
-                    sum = sum + c;
-              }}
-    }
+    
 }

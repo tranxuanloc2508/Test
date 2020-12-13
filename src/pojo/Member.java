@@ -22,10 +22,10 @@ public class Member {
     private String diachi;
     private String sdt;
 
-    public Member(int id,String ma, String hoten,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
+    public Member(int id,String ma, String hoten,String gioitinh,  String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;
         this.hoten = hoten;
-//        this.gioitinh = gioitinh;
+        this.gioitinh = gioitinh;
         this.ngaysinh = ngaysinh;
         this.doituong = doituong;
         this.bophan = bophan;
@@ -33,7 +33,7 @@ public class Member {
         this.email = email;
         this.diachi = diachi;
         this.sdt = sdt;
-        this.id= this.id;
+        this.id= id;
     }
     public Member(String ma, String hoten,String gioitinh, String ngaysinh, String doituong, String bophan, String hanthe, String email, String diachi, String sdt) {
         this.ma = ma;

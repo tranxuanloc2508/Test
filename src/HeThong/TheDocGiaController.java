@@ -7,6 +7,7 @@ package HeThong;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import pojo.Member;
@@ -27,49 +29,81 @@ import pojo.Member;
  */
 public class TheDocGiaController implements Initializable {
 
-    @FXML GridPane grPand;
-    @FXML TextField txtMa;
-    @FXML TextField txtHoten;
+    @FXML
+    GridPane grPand;
+    @FXML
+    TextField txtMa;
+    @FXML
+    TextField txtHoten;
 //    @FXML TextField txtGioiTinh;
-    @FXML TextField txtNgaySinh;
-    @FXML TextField txtDoiTuong;
-    @FXML TextField txtBoPhan;
-    @FXML TextField txtHanThe;
-    @FXML TextField txtEmail;
-    @FXML TextField txtDiaChi;
-    @FXML TextField txtSdt;
-    @FXML Button btnSave;
-    @FXML ComboBox<String> cbGioiTinh;
-    
+    @FXML
+    DatePicker txtNgaySinh;
+    @FXML
+    TextField txtDoiTuong;
+    @FXML
+    TextField txtBoPhan;
+    @FXML
+    TextField txtHanThe;
+    @FXML
+    TextField txtEmail;
+    @FXML
+    TextField txtDiaChi;
+    @FXML
+    TextField txtSdt;
+    @FXML
+    Button btnSave;
+    @FXML
+    ComboBox<String> cbGioiTinh;
+
     ObservableList<String> list = FXCollections.observableArrayList("Man", "Woman", "Other");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cbGioiTinh.setItems(list);
+        txtSdt.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtSdt.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
-    public void comboBoxChanged (ActionEvent event){
+
+    @FXML
+    public void comboBoxChanged(ActionEvent event) {
         cbGioiTinh.setPromptText(cbGioiTinh.getValue());
     }
 
-      public void addMember(ActionEvent event){
+    @FXML
+    public void addMember(ActionEvent event) {
+        if (!this.txtMa.getText().equals("") && !this.txtHoten.getText().equals("") 
+                && !this.txtNgaySinh.toString().equals("") && !this.txtDoiTuong.getText().equals("")
+                && !this.txtBoPhan.getText().equals("") && !this.txtHanThe.getText().equals("") 
+                && !this.txtEmail.getText().equals("") && !this.txtDiaChi.getText().equals("") 
+                && !this.txtSdt.getText().isEmpty()) {
+            
+            String date = txtNgaySinh.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
+            
+            Member b = new Member(this.txtMa.getText(), this.txtHoten.getText(),
+                    cbGioiTinh.getValue(),
+                    date, txtDoiTuong.getText(), txtBoPhan.getText(),
+                    txtHanThe.getText(), txtDiaChi.getText(), txtDiaChi.getText(),
+                    txtSdt.getText());
 
-//        String mId = UUID.randomUUID().toString();
-        Member b= new Member(this.txtMa.getText(), this.txtHoten.getText(),
-                cbGioiTinh.getValue(),
-                txtNgaySinh.getText(), txtDoiTuong.getText(), txtBoPhan.getText(),
-                txtHanThe.getText(), txtDiaChi.getText(), txtDiaChi.getText(),
-                txtSdt.getText());
-        
-//        cbGioiTinh.getSelectionModel().getSelectedItem()
-        try {
-            Utils.Util.addMember(b);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Add member succsessful!!!!");
-            alert.show();
-        } catch (SQLException ex) {
+            try {
+                Utils.MemberServices.addMember(b);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Add member succsessful!!!!");
+                alert.show();
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Add member failed!!!!" + ex.getMessage());
+                alert.show();
+            }
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Add member failed!!!!" + ex.getMessage());
+            alert.setContentText("Vui lòng nhập đủ các trường!!!");
             alert.show();
         }
+
     }
 
 }

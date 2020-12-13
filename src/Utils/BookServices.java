@@ -29,7 +29,7 @@ public class BookServices {
 
         //add Question
         PreparedStatement stm = conn.prepareStatement(sql);
-        stm.setInt(1,book.getId());
+        stm.setInt(1, book.getId());
         stm.setString(2, book.getMa());
         stm.setString(3, book.getTenSach());
         stm.setString(4, book.getTacGia());
@@ -39,21 +39,83 @@ public class BookServices {
         stm.setString(8, book.getViTri());
 
         stm.executeUpdate();
-
-        conn.commit();
     }
 
-    public static void addBook(Book book) throws SQLException {
+    public static boolean addBookk(Book book, String sql) throws SQLException {
+        if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
+                && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
+            Connection conn = JDBCconn.getConnection();
+
+            conn.setAutoCommit(false);
+
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+            //stm.setString(1, book.getId()));
+            stm.setString(1, book.getMa());
+            stm.setString(2, book.getTenSach());
+            stm.setString(3, book.getTacGia());
+            stm.setString(4, book.getMoTa());
+            stm.setString(5, book.getNamXuatBan());
+            stm.setString(6, book.getNgayNhap());
+            stm.setString(7, book.getViTri());
+
+            stm.executeUpdate();
+
+            conn.commit();
+            
+        }
+        return false;
+
+    }
+
+    public static boolean addBook(Book book) throws SQLException {
 
         String sql = "INSERT INTO book(masach,tensach,tacgia,motasach,"
                 + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?)";
-        addorUpdateBook(book, sql);
+        addBookk(book, sql);
+            
+        
+        return false;
     }
-     public static void updateBook(Book book) throws SQLException {
+
+    public static boolean update(Book book, String sql) throws SQLException {
+        if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
+                && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
+            Connection conn = JDBCconn.getConnection();
+
+            conn.setAutoCommit(false);
+
+            //add Question
+            PreparedStatement stm = conn.prepareStatement(sql);
+//            stm.setInt(1, book.getId());
+            stm.setString(1, book.getMa());
+            stm.setString(2, book.getTenSach());
+            stm.setString(3, book.getTacGia());
+            stm.setString(4, book.getMoTa());
+            stm.setString(5, book.getNamXuatBan());
+            stm.setString(6, book.getNgayNhap());
+            stm.setString(7, book.getViTri());
+            stm.setInt(8, book.getId());
+
+            stm.executeUpdate();
+
+            conn.commit();
+            return true;
+        }
+        return false;
+    }
+        
+
+    
+
+    public static boolean updateBook(Book book) throws SQLException {
 
         String sql = "UPDATE Book Set masach=?,tensach=?,tacgia=?,motasach=?,"
                 + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
-        addorUpdateBook(book, sql);
+        if(update(book, sql)){
+            return true;
+        }
+        return false;
     }
 
     public static void addB(Book book, String sql) throws SQLException {
@@ -74,7 +136,6 @@ public class BookServices {
 
     }
 
-
     public static List<Book> getBooks(String keyword) throws SQLException {
         String sql = "SELECT * FROM book ";
         Connection conn = JDBCconn.getConnection();
@@ -94,7 +155,7 @@ public class BookServices {
         return books;
 
     }
-
+       
     public static List<Book> Search(String keyword) throws SQLException {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book ";
@@ -125,10 +186,11 @@ public class BookServices {
         }
         return books;
     }
-    public static Alert getAlertInfo(String content, Alert.AlertType type){
-         Alert a = new Alert(type);
-         a.setContentText(content);
-         
-         return a;
-     }
+
+    public static Alert getAlertInfo(String content, Alert.AlertType type) {
+        Alert a = new Alert(type);
+        a.setContentText(content);
+
+        return a;
+    }
 }
