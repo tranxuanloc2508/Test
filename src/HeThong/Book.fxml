@@ -78,7 +78,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-         <Tab onSelectionChanged="#Loaddata" text="FindMember">
+         <Tab text="Member">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="578.0" prefWidth="926.0">
                <children>
