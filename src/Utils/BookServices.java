@@ -89,7 +89,7 @@ public class BookServices {
     }
      public static void updateBook(Book book) throws SQLException {
 
-        String sql = "UPDATE Book Set masach=?,tensach=?,tacgia=?,motasach=?,"
+        String sql = "UPDATE book Set masach=?,tensach=?,tacgia=?,motasach=?,"
                 + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
         update(book, sql);
     }

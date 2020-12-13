@@ -189,10 +189,18 @@ public class BookController implements Initializable {
             try {
                 Utils.BookServices.addBook(b);
                 this.tbBook.getColumns().clear();
-                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setContentText("Add Book succsessful!!!!");
+                loadBook();
                 alert.show();
+                this.txtma.setText(""); 
+                this.txtNXB.setText("");
+                this.txtten.setText("");
+                this.txttacGia.setText("");
+                this.txtmota.setText("");
+                this.txtNgayNhapSach.setText("");
+                this.txtViTri.setText("");
+                
             } catch (SQLException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Add Book failed!!!!" + ex.getMessage());
@@ -237,21 +245,21 @@ public class BookController implements Initializable {
 
         this.tbmuon1.getItems().clear();
 
-        TableColumn clma = new TableColumn("ID");
+//        TableColumn clma = new TableColumn("ID");
         TableColumn clten = new TableColumn("IDbook");
         TableColumn cltg = new TableColumn("IDMember");
         TableColumn clmota = new TableColumn("Ngày mượn");
         TableColumn clnam = new TableColumn("Ngày trả");
         TableColumn cltien = new TableColumn("Tiền phạt");
 
-        clma.setCellValueFactory(new PropertyValueFactory("id"));
+//        clma.setCellValueFactory(new PropertyValueFactory("id"));
         clten.setCellValueFactory(new PropertyValueFactory("idbook"));
         cltg.setCellValueFactory(new PropertyValueFactory("iddocgia"));
         clmota.setCellValueFactory(new PropertyValueFactory("ngaymuon"));
         clnam.setCellValueFactory(new PropertyValueFactory("ngaytra"));
         cltien.setCellValueFactory(new PropertyValueFactory("tienphat"));
         this.tbmuon1.getColumns().clear();
-        this.tbmuon1.getColumns().addAll(clma, clten, cltg, clmota, clnam, cltien);
+        this.tbmuon1.getColumns().addAll(clten, cltg, clmota, clnam, cltien);
         this.tbmuon1.setItems(FXCollections.observableArrayList(BorrowServices.getBorrow("")));
         this.tbmuon.setVisible(false);
 
@@ -485,26 +493,35 @@ public class BookController implements Initializable {
 
     @FXML
     private void updateB(ActionEvent event) {
-        Book q = this.tbBook.getSelectionModel().getSelectedItem();
-        if (q != null) {
-            try {
-                BookServices.updateBook(q);
+        if (!this.txtma.getText().equals("") && !this.txtNXB.getText().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
+                && !this.txtmota.getText().equals("") && !this.txtNgayNhapSach.getText().equals("") && !this.txtViTri.getText().equals("")) {
 
-                this.tbBook.getItems().clear();
-                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+            Book q = this.tbBook.getSelectionModel().getSelectedItem();
+            Book b = new Book(q.getId(), this.txtma.getText(), this.txtten.getText(),
+                    txttacGia.getText(), txtmota.getText(), txtNXB.getText(),
+                    txtNgayNhapSach.getText(), txtViTri.getText());
+            if (b != null) {
+                try {
+                    BookServices.updateBook(b);
 
-                BookServices.getAlertInfo("Update successfully",
-                        Alert.AlertType.INFORMATION).show();
-            } catch (SQLException ex) {
-                BookServices.getAlertInfo("Update failed" + ex.getMessage(),
-                        Alert.AlertType.ERROR).show();
+                    this.tbBook.getItems().clear();
+                    this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+
+                    BookServices.getAlertInfo("Update successfully",
+                            Alert.AlertType.INFORMATION).show();
+                } catch (SQLException ex) {
+                    BookServices.getAlertInfo("Update failed" + ex.getMessage(),
+                            Alert.AlertType.ERROR).show();
+                }
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Vui lòng nhập đủ các trường!!!");
+            alert.show();
         }
     }
 
-    @FXML
-    private void Loaddata(Event event) {
-    }
+ 
 
     @FXML
     private void loadThongKe(Event event) throws SQLException {
