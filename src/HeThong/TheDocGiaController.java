@@ -90,10 +90,8 @@ public class TheDocGiaController implements Initializable {
                 && !this.txtSdt.getText().isEmpty()) {
 
             String date = txtNgaySinh.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
-            String email = "\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
-            Pattern p = Pattern.compile(email);
-            Matcher r = p.matcher(txtEmail.getText());
-            if (r.matches()) {
+           
+            
                 Member b = new Member(this.txtMa.getText(), this.txtHoten.getText(),
                         cbGioiTinh.getValue(),
                         date, txtDoiTuong.getText(), txtBoPhan.getText(),
@@ -111,11 +109,7 @@ public class TheDocGiaController implements Initializable {
                     alert.show();
                 }
 
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("sai email!!!");
-                alert.show();
-            }
+            
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Vui lòng nhập đủ các trường!!!");
