@@ -106,16 +106,7 @@ public class MemberServices {
     }
 //    
 
-    public static boolean delBook(int bookId) throws SQLException {
-        Connection conn = JDBCconn.getConnection();
-        String sql = "DELETE FROM book WHERE id=?";
-        PreparedStatement stm = conn.prepareStatement(sql);
-        stm.setInt(1, bookId);
-
-        int kq = stm.executeUpdate();
-
-        return kq > 0;
-    }
+   
 
     public static List<Member> Search(String keyword) throws SQLException {
         List<Member> books = new ArrayList<>();

@@ -49,5 +49,6 @@
         <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
       <ComboBox fx:id="cbGioiTinh" onAction="#comboBoxChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <DatePicker fx:id="txtNgaySinh" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="btnThoat2" mnemonicParsing="false" onAction="#back" text="Quay Lại" GridPane.rowIndex="10" />
     </children>
 </GridPane>

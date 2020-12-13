@@ -67,12 +67,7 @@ public class UserController implements Initializable {
                             "Book.fxml")));
                     stage.setScene(scence);
                     stage.show();
-//                    Parent root = FXMLLoader.load(getClass().getResource("TheDocGia.fxml"));
-//
-//                    Scene scene = new Scene(root);
-//                    Stage stage = new Stage();
-//                    stage.setScene(scene);
-//                    stage.show();
+
                 } catch (IOException ex) {
                     System.err.println(ex.getMessage());
                 }
@@ -127,12 +122,6 @@ public class UserController implements Initializable {
         conn = JDBCconn.getConnection();
     }
 
-//  .  private void showDialog(String info, String  header, String title){
-//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setContentText(info);
-//        alert.setHeaderText(header);
-//        alert.showAndWait();
-//    }
     @FXML
     private void clickM(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();

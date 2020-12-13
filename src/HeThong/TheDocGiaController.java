@@ -5,21 +5,28 @@
  */
 package HeThong;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import pojo.Member;
 
 /**
@@ -56,6 +63,8 @@ public class TheDocGiaController implements Initializable {
     ComboBox<String> cbGioiTinh;
 
     ObservableList<String> list = FXCollections.observableArrayList("Man", "Woman", "Other");
+    @FXML
+    private Button btnThoat2;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,28 +83,37 @@ public class TheDocGiaController implements Initializable {
 
     @FXML
     public void addMember(ActionEvent event) {
-        if (!this.txtMa.getText().equals("") && !this.txtHoten.getText().equals("") 
+        if (!this.txtMa.getText().equals("") && !this.txtHoten.getText().equals("")
                 && !this.txtNgaySinh.toString().equals("") && !this.txtDoiTuong.getText().equals("")
-                && !this.txtBoPhan.getText().equals("") && !this.txtHanThe.getText().equals("") 
-                && !this.txtEmail.getText().equals("") && !this.txtDiaChi.getText().equals("") 
+                && !this.txtBoPhan.getText().equals("") && !this.txtHanThe.getText().equals("")
+                && !this.txtEmail.getText().equals("") && !this.txtDiaChi.getText().equals("")
                 && !this.txtSdt.getText().isEmpty()) {
-            
-            String date = txtNgaySinh.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
-            
-            Member b = new Member(this.txtMa.getText(), this.txtHoten.getText(),
-                    cbGioiTinh.getValue(),
-                    date, txtDoiTuong.getText(), txtBoPhan.getText(),
-                    txtHanThe.getText(), txtDiaChi.getText(), txtDiaChi.getText(),
-                    txtSdt.getText());
 
-            try {
-                Utils.MemberServices.addMember(b);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Add member succsessful!!!!");
-                alert.show();
-            } catch (SQLException ex) {
+            String date = txtNgaySinh.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
+            String email = "\\b[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}\\b";
+            Pattern p = Pattern.compile(email);
+            Matcher r = p.matcher(txtEmail.getText());
+            if (r.matches()) {
+                Member b = new Member(this.txtMa.getText(), this.txtHoten.getText(),
+                        cbGioiTinh.getValue(),
+                        date, txtDoiTuong.getText(), txtBoPhan.getText(),
+                        txtHanThe.getText(),txtEmail.getText(), txtDiaChi.getText(),
+                        txtSdt.getText());
+
+                try {
+                    Utils.MemberServices.addMember(b);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Add member succsessful!!!!");
+                    alert.show();
+                } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Add member failed!!!!" + ex.getMessage());
+                    alert.show();
+                }
+
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Add member failed!!!!" + ex.getMessage());
+                alert.setContentText("sai email!!!");
                 alert.show();
             }
         } else {
@@ -104,6 +122,18 @@ public class TheDocGiaController implements Initializable {
             alert.show();
         }
 
+    }
+
+    @FXML
+    private void back(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setMaximized(false);
+        stage.close();
+        Scene scence = new Scene(FXMLLoader.load(getClass().getResource(
+                "User.fxml")));
+        stage.setScene(scence);
+        stage.show();
     }
 
 }

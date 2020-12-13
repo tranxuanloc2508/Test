@@ -9,12 +9,14 @@ import Utils.BookServices;
 import Utils.BorrowServices;
 import Utils.JDBCconn;
 import Utils.MemberServices;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,13 +24,18 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -40,8 +47,10 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import pojo.Book;
 import pojo.Borrow;
 import pojo.Member;
@@ -64,9 +73,9 @@ public class BookController implements Initializable {
     @FXML
     TextField txtmota;
     @FXML
-    DatePicker txtNXB;
+    TextField txtNXB;
     @FXML
-    DatePicker txtNgayNhapSach;
+    TextField txtNgayNhapSach;
     @FXML
     TextField txtViTri;
     @FXML
@@ -101,6 +110,12 @@ public class BookController implements Initializable {
     private TableView<Member> tbMem;
     @FXML
     private Button btFullMem;
+    @FXML
+    private Button btnThoat1;
+    @FXML
+    private Button btnThoat2;
+    @FXML
+    private Button btnThoat21;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -167,13 +182,28 @@ public class BookController implements Initializable {
                 txtten.setText(b.getTenSach());
                 txttacGia.setText(b.getTacGia());
                 txtmota.setText(b.getMoTa());
-                txtNXB.equals(b.getNamXuatBan().toString());
-                txtNgayNhapSach.equals(b.getNgayNhap().toString());
+                txtNXB.setText(b.getNamXuatBan());
+                txtNgayNhapSach.setText(b.getNgayNhap());
                 txtViTri.setText(b.getViTri());
 
             });
 
             return row;
+        });
+//         txttacGia.textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue.matches("^[a-zA-Z][\\\\w-]+@([\\\\w]+\\\\.[\\\\w]+|[\\\\w]+\\\\.[\\\\w]{2,}\\\\.[\\\\w]{2,})$")) {
+//                txttacGia.setText(newValue.replaceAll("^[a-zA-Z][\\\\w-]+@([\\\\w]+\\\\.[\\\\w]+|[\\\\w]+\\\\.[\\\\w]{2,}\\\\.[\\\\w]{2,})$", ""));
+//            }
+//        });
+         txtNgayNhapSach.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtNgayNhapSach.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+          txtNXB.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtNXB.setText(newValue.replaceAll("[^\\d]", ""));
+            }
         });
     }
 
@@ -181,28 +211,27 @@ public class BookController implements Initializable {
     public void addBook(ActionEvent event) {
         if (!this.txtma.getText().equals("") && !this.txtNXB.toString().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
                 && !this.txtmota.getText().equals("") && !this.txtNgayNhapSach.toString().equals("") && !this.txtViTri.getText().equals("")) {
-                String date1 = txtNXB.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
-                String date2 = txtNgayNhapSach.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
             Book b = new Book(this.txtma.getText(), this.txtten.getText(),
-                    txttacGia.getText(), txtmota.getText(), date1,
-                    date2, txtViTri.getText());
-
+                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(),this.txtNgayNhapSach.getText(),
+                     txtViTri.getText());
+           
             try {
                 Utils.BookServices.addBook(b);
                 this.tbBook.getColumns().clear();
-//                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setContentText("Add Book succsessful!!!!");
+                alert.setContentText("Thêm sách thành công !!!!");
                 loadBook();
                 alert.show();
+
             } catch (SQLException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Add Book failed!!!!" + ex.getMessage());
+                alert.setContentText("Thêm sách thất bại !!!!" + ex.getMessage());
                 alert.show();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Vui lòng nhập đủ các trường!!!");
+            alert.setContentText("Vui lòng nhập đủ thông tin !!!");
             alert.show();
         }
 
@@ -239,21 +268,21 @@ public class BookController implements Initializable {
 
         this.tbmuon1.getItems().clear();
 
-        TableColumn clma = new TableColumn("ID");
+//        TableColumn clma = new TableColumn("ID");
         TableColumn clten = new TableColumn("IDbook");
         TableColumn cltg = new TableColumn("IDMember");
         TableColumn clmota = new TableColumn("Ngày mượn");
         TableColumn clnam = new TableColumn("Ngày trả");
         TableColumn cltien = new TableColumn("Tiền phạt");
 
-        clma.setCellValueFactory(new PropertyValueFactory("id"));
+//        clma.setCellValueFactory(new PropertyValueFactory("id"));
         clten.setCellValueFactory(new PropertyValueFactory("idbook"));
         cltg.setCellValueFactory(new PropertyValueFactory("iddocgia"));
         clmota.setCellValueFactory(new PropertyValueFactory("ngaymuon"));
         clnam.setCellValueFactory(new PropertyValueFactory("ngaytra"));
         cltien.setCellValueFactory(new PropertyValueFactory("tienphat"));
         this.tbmuon1.getColumns().clear();
-        this.tbmuon1.getColumns().addAll(clma, clten, cltg, clmota, clnam, cltien);
+        this.tbmuon1.getColumns().addAll(clten, cltg, clmota, clnam, cltien);
         this.tbmuon1.setItems(FXCollections.observableArrayList(BorrowServices.getBorrow("")));
         this.tbmuon.setVisible(false);
 
@@ -292,14 +321,16 @@ public class BookController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Bạn chắc chắn xóa? ");
                 alert.showAndWait().ifPresent(res -> {
-                    if (res == ButtonType.OK) {           
+                    if (res == ButtonType.OK) {
                         try {
-                            MemberServices.delBook(q.getId());
+                            BookServices.delBook(q.getId());
 
                             MemberServices.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
+                            
                             this.loadData("");
+                            loadBook();
                         } catch (SQLException ex) {
-                            MemberServices.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();                 
+                            MemberServices.getAlertInfo("Xóa thất bại: " + ex.getMessage(), Alert.AlertType.INFORMATION).show();
                         }
                     }
                 });
@@ -322,13 +353,13 @@ public class BookController implements Initializable {
                 BorrowServices.addBorrow(b);
 
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Add successful");
+                alert.setContentText("Mượn Thành Công!!");
                 this.loadBook1();
                 alert.showAndWait();
 
             } catch (SQLException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Add unsuccessful" + ex.getMessage());
+                alert.setContentText("Mượn không thành công" + ex.getMessage());
                 alert.showAndWait();
             }
         } else {
@@ -358,13 +389,13 @@ public class BookController implements Initializable {
             BorrowServices.returnB(b, ngaytra, ngaymuon);
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Update successful");
+            alert.setContentText("Trả sách thành công !!!");
             this.loadBook1();
             alert.showAndWait();
 
         } catch (SQLException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Update failed" + ex.getMessage());
+            alert.setContentText("Trả sách thất bại !!!" + ex.getMessage());
             alert.showAndWait();
 
         }
@@ -487,25 +518,32 @@ public class BookController implements Initializable {
 
     @FXML
     private void updateB(ActionEvent event) {
-        Book q = this.tbBook.getSelectionModel().getSelectedItem();
-        if (q != null) {
-            try {
-                BookServices.updateBook(q);
+        if (!this.txtma.getText().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
+                && !this.txtmota.getText().equals("") && !this.txtViTri.getText().equals("")) {
+//           
+            Book q = this.tbBook.getSelectionModel().getSelectedItem();
+            Book b = new Book(q.getId(), this.txtma.getText(), this.txtten.getText(),
+                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(),this.txtNgayNhapSach.getText(),
+                     txtViTri.getText());
+            if (b != null) {
+                try {
+                    BookServices.updateBook(b);
 
-                this.tbBook.getItems().clear();
-                this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
+                    this.tbBook.getItems().clear();
+                    this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
 
-                BookServices.getAlertInfo("Update successfully",
-                        Alert.AlertType.INFORMATION).show();
-            } catch (SQLException ex) {
-                BookServices.getAlertInfo("Update failed" + ex.getMessage(),
-                        Alert.AlertType.ERROR).show();
+                    BookServices.getAlertInfo("Cập nhật thông tin sách thành công !!!",
+                            Alert.AlertType.INFORMATION).show();
+                } catch (SQLException ex) {
+                    BookServices.getAlertInfo("Cập nhật thông tin sách thất bại !!!" + ex.getMessage(),
+                            Alert.AlertType.ERROR).show();
+                }
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Vui lòng nhập đủ thông tin !!!");
+            alert.show();
         }
-    }
-
-    @FXML
-    private void Loaddata(Event event) {
     }
 
     @FXML
@@ -534,9 +572,9 @@ public class BookController implements Initializable {
             String a = rs2.getString("count(ngaytra)");
             issueData.add("Số quyển sách đã trả là :" + a);
         }
-       String sql3 = "SELECT month(ngaytra),count(ngaytra) "
-               + "FROM bookdocgia  "
-               + "where  ngaytra >= 01/12/2020 AND ngaytra <  01/01/2021 ";
+        String sql3 = "SELECT month(ngaytra),count(ngaytra) "
+                + "FROM bookdocgia  "
+                + "where  ngaytra >= '01/12/2020' AND ngaytra <  '01/01/2021' ";
         PreparedStatement stm3 = conn.prepareStatement(sql3);
         ResultSet rs3 = stm3.executeQuery();
         if (rs3.next()) {
@@ -544,5 +582,28 @@ public class BookController implements Initializable {
             issueData.add("Số quyển sách đã mượn trong năm 2020:" + a);
         }
         listViewData.getItems().setAll(issueData);
+    }
+
+    @FXML
+    private void reset(ActionEvent event) {
+        this.txtma.setText("");
+        this.txtNXB.setText("");
+        this.txtten.setText("");
+        this.txttacGia.setText("");
+        this.txtmota.setText("");
+        this.txtNgayNhapSach.setText("");
+        this.txtViTri.setText("");
+    }
+
+    @FXML
+    private void back(ActionEvent event) throws IOException {
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setMaximized(false);
+        stage.close();
+        Scene scence = new Scene(FXMLLoader.load(getClass().getResource(
+                "User.fxml")));
+        stage.setScene(scence);
+        stage.show();
     }
 }

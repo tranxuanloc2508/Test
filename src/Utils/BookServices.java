@@ -78,6 +78,16 @@ public class BookServices {
         return false;
     }
 
+     public static boolean delBook(int bookId) throws SQLException {
+        Connection conn = JDBCconn.getConnection();
+        String sql = "DELETE FROM book WHERE id=?";
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setInt(1, bookId);
+
+        int kq = stm.executeUpdate();
+
+        return kq > 0;
+    }
     public static boolean update(Book book, String sql) throws SQLException {
         if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
                 && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
@@ -110,7 +120,7 @@ public class BookServices {
 
     public static boolean updateBook(Book book) throws SQLException {
 
-        String sql = "UPDATE Book Set masach=?,tensach=?,tacgia=?,motasach=?,"
+        String sql = "UPDATE book Set masach=?,tensach=?,tacgia=?,motasach=?,"
                 + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
         if(update(book, sql)){
             return true;
