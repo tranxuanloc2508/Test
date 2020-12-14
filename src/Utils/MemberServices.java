@@ -60,7 +60,7 @@ public class MemberServices {
     public static boolean addM(Member b, String s) throws SQLException {
         if (!b.getMa().equals("") && !b.getHoten().equals("") && !b.getGioitinh().equals("") 
                 && !b.getNgaysinh().equals("")&& !b.getDoituong().equals("") && !b.getBophan().equals("") 
-                && !b.getHanthe().equals("")&& !b.getEmail().equals("")&& !b.getDiachi().equals("")
+                && !b.getEmail().equals("")&& !b.getDiachi().equals("")
                 && !b.getSdt().equals("")) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Connection conn = JDBCconn.getConnection();
@@ -97,7 +97,7 @@ public class MemberServices {
 
     public static boolean addMember(Member m) throws SQLException {
         String sql = "INSERT INTO thedocgia(madocgia,hoten,gioitinh,ngaysinh,"
-                + "doituong,bophan,hanthe,email,diachi,sdt)"
+                + "doituong,bophan,email,diachi,sdt,hanthe)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?)";
         if(addM(m, sql)) {
             return true;

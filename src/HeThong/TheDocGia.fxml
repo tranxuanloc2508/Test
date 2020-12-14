@@ -25,7 +25,6 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Mã độc giả" />
@@ -34,21 +33,19 @@
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Giới Tính" GridPane.rowIndex="3" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Đối tượng" GridPane.rowIndex="4" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Bộ  phận" GridPane.rowIndex="5" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Hạn thẻ" GridPane.rowIndex="6" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Email" GridPane.rowIndex="7" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Địa chỉ" GridPane.rowIndex="8" />
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Điện thoại" GridPane.rowIndex="9" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Email" GridPane.rowIndex="6" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Địa chỉ" GridPane.rowIndex="7" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="a" text="Điện thoại" GridPane.rowIndex="8" />
         <TextField fx:id="txtMa" promptText="Ví dụ : M01,M02...." GridPane.columnIndex="1" />
         <TextField fx:id="txtHoten" promptText="Ví dụ : Nguyễn Văn A" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <TextField fx:id="txtDoiTuong" promptText="Ví dụ : Sinh viên, Giảng Viên" GridPane.columnIndex="1" GridPane.rowIndex="4" />
         <TextField fx:id="txtBoPhan" promptText="Ví dụ : Khoa Công Nghệ Thông Tin" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-        <TextField fx:id="txtHanThe" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-        <TextField fx:id="txtEmail" promptText="Ví dụ : abc@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-        <TextField fx:id="txtDiaChi" promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="8" />
-        <TextField fx:id="txtSdt" promptText="Chỉ nhập số....." GridPane.columnIndex="1" GridPane.rowIndex="9" />
-        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+        <TextField fx:id="txtEmail" promptText="Ví dụ : abc@gmail.com" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+        <TextField fx:id="txtDiaChi" promptText="Đia chỉ.." GridPane.columnIndex="1" GridPane.rowIndex="7" />
+        <TextField fx:id="txtSdt" promptText="Chỉ nhập số....." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+        <Button fx:id="btnSave" mnemonicParsing="false" onAction="#addMember" text="Lưu thông tin" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       <ComboBox fx:id="cbGioiTinh" onAction="#comboBoxChanged" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <DatePicker fx:id="txtNgaySinh" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Button fx:id="btnThoat2" mnemonicParsing="false" onAction="#back" text="Quay Lại" GridPane.rowIndex="10" />
+      <Button fx:id="btnThoat2" mnemonicParsing="false" onAction="#back" text="Quay Lại" GridPane.rowIndex="9" />
     </children>
 </GridPane>

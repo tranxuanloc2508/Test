@@ -53,12 +53,12 @@
                         <TableView fx:id="tbmuon" layoutX="25.0" layoutY="208.0" prefHeight="349.0" prefWidth="879.0" />
                         <Button layoutX="826.0" layoutY="59.0" mnemonicParsing="false" onAction="#muonSach" text="BookBorrow" />
                         <Button layoutX="395.0" layoutY="154.0" mnemonicParsing="false" onAction="#traSach" text="BookReturn" />
-                        <TextField fx:id="txtma1" layoutX="432.0" layoutY="33.0" prefHeight="31.0" prefWidth="371.0" promptText="ID Sách" />
-                        <TextField fx:id="txtten1" layoutX="434.0" layoutY="74.0" prefHeight="31.0" prefWidth="368.0" promptText="Tên Sách" />
+                        <TextField fx:id="txtma1" editable="false" layoutX="432.0" layoutY="33.0" prefHeight="31.0" prefWidth="371.0" promptText="ID Sách" />
+                        <TextField fx:id="txtten1" editable="false" layoutX="434.0" layoutY="74.0" prefHeight="31.0" prefWidth="368.0" promptText="Tên Sách" />
                         <TextField fx:id="txtIdUser" layoutX="165.0" layoutY="39.0" prefHeight="41.0" prefWidth="142.0" promptText="Nhập ID" />
                         <Button layoutX="762.0" layoutY="154.0" mnemonicParsing="false" onAction="#loadFull" text="Book List" />
                         <TableView fx:id="tbmuon1" layoutX="35.0" layoutY="205.0" prefHeight="362.0" prefWidth="873.0" />
-                        <DatePicker fx:id="dateReturn" layoutX="149.0" layoutY="154.0" />
+                        <DatePicker fx:id="dateReturn" editable="false" layoutX="149.0" layoutY="154.0" />
                         <Text layoutX="35.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DateReturn" />
                         <Text layoutX="48.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID member" wrappingWidth="148.4482421875" />
                         <Button fx:id="btnThoat1" layoutX="842.0" layoutY="154.0" mnemonicParsing="false" onAction="#back" text="Returns" />

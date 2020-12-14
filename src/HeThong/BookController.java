@@ -352,42 +352,29 @@ public class BookController implements Initializable {
     @FXML
     public void muonSach(ActionEvent event) throws ParseException, SQLException {
 
-        List<Member> q = MemberServices.getMembers("");
+        Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
+        if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
+            try {
+                BorrowServices.addBorrow(b);
 
-        for (Member s : q) {
-            if (s.getId() == Integer.parseInt(txtIdUser.getText())) {
-                Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
-                if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
-                    try {
-                        BorrowServices.addBorrow(b);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Mượn Thành Công!!");
+                this.loadBook1();
+                txtIdUser.setText("");
+                txtma1.setText("");
+                txtten1.setText("");
+                alert.showAndWait();
 
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setContentText("Mượn Thành Công!!");
-                        this.loadBook1();
-                        txtIdUser.setText("");
-                        txtma1.setText("");
-                        txtten1.setText("");
-                        alert.showAndWait();
-
-                    } catch (SQLException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Mượn không thành công" + ex.getMessage());
-                        alert.showAndWait();
-                    }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Hết hạn thẻ");
-                    alert.showAndWait();
-                    
-                }
-                break;
-            } else {
+            } catch (SQLException ex) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("sai id");
+                alert.setContentText("Mượn không thành công" + ex.getMessage());
                 alert.showAndWait();
             }
-            break;
-            
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Hết hạn thẻ");
+            alert.showAndWait();
+
         }
         this.tbmuon1.setVisible(true);
         this.tbmuon.setVisible(false);

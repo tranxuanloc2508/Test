@@ -70,6 +70,15 @@ public class MemberTest {
           Logger.getLogger(MemberTest.class.getName()).log(Level.SEVERE, null, ex);
       }
        }
+       @Test
+       public void addM(){
+           Member m = new Member("M01", "a", "Man", "14/02/2000", "Sinh viên", "IT", "email", "A", "00");
+           try{
+               Assert.assertTrue(MemberServices.addMember(m));
+           }catch (SQLException ex) {
+          Logger.getLogger(MemberTest.class.getName()).log(Level.SEVERE, null, ex);
+      }
+       }
    
    
    

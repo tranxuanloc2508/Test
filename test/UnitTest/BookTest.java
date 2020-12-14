@@ -182,7 +182,7 @@ public class BookTest {
         Book b = new Book("KH231", "Mạng máy tính", "Lưu Quang Phương", "123 trang", "2014", "1/9/2014", "A176");
         Book b1 = new Book("", "", "", "", "", "", "");
         try {
-            Assert.assertFalse(BookServices.addBook(b1));//Fields Empty
+                Assert.assertFalse(BookServices.addBook(b1));//Fields Empty
         } catch (SQLException ex) {
             Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
         }

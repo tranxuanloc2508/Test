@@ -25,7 +25,7 @@ import pojo.Borrow;
  */
 public class BorrowServices {
 
-    public static void addBorrow(Borrow b) throws SQLException, ParseException {
+    public static boolean addBorrow(Borrow b) throws SQLException, ParseException {
         String sql = "INSERT INTO bookdocgia(id,idbook,iddocgia,ngaymuon) VALUES (?,?,?,?)";
         Connection conn = JDBCconn.getConnection();
         
@@ -44,9 +44,10 @@ public class BorrowServices {
         stm.executeUpdate();
         
         conn.commit();
+        return true;
     }
     
-    public static void returnB(Borrow b, String tra, String muon) throws ParseException, SQLException{
+    public static boolean returnB(Borrow b, String tra, String muon) throws ParseException, SQLException{
         String sql= "UPDATE bookdocgia SET ngaytra=?, tienphat=? WHERE id=?";
         Connection conn = JDBCconn.getConnection();
         
@@ -88,6 +89,7 @@ public class BorrowServices {
 
             conn.commit();
         }
+        return true;
         
     }
     

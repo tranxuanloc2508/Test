@@ -49,8 +49,8 @@ public class TheDocGiaController implements Initializable {
     TextField txtDoiTuong;
     @FXML
     TextField txtBoPhan;
-    @FXML
-    TextField txtHanThe;
+//    @FXML
+//    TextField txtHanThe;
     @FXML
     TextField txtEmail;
     @FXML
@@ -90,7 +90,7 @@ public class TheDocGiaController implements Initializable {
     public void addMember(ActionEvent event) {
         if (!this.txtMa.getText().equals("") && !this.txtHoten.getText().equals("")
                 && !this.txtNgaySinh.toString().equals("") && !this.txtDoiTuong.getText().equals("")
-                && !this.txtBoPhan.getText().equals("") && !this.txtHanThe.getText().equals("")
+                && !this.txtBoPhan.getText().equals("")
                 && !this.txtEmail.getText().equals("") && !this.txtDiaChi.getText().equals("")
                 && !this.txtSdt.getText().isEmpty()) {
 
@@ -99,8 +99,7 @@ public class TheDocGiaController implements Initializable {
             
                 Member b = new Member(this.txtMa.getText(), this.txtHoten.getText(),
                         cbGioiTinh.getValue(),
-                        date, txtDoiTuong.getText(), txtBoPhan.getText(),
-                        txtHanThe.getText(),txtEmail.getText(), txtDiaChi.getText(),
+                        date, txtDoiTuong.getText(), txtBoPhan.getText(),txtEmail.getText(), txtDiaChi.getText(),
                         txtSdt.getText());
 
                 try {

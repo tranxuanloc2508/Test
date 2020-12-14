@@ -5,9 +5,13 @@
         <group>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/TheDocGiaController.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/pojo/Book.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/BorrowServices.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/styleCss.css</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/BookServices.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/test/UnitTest/BookTest.java</file>
             <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/BookController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/HeThong/UserController.java</file>
+            <file>file:/C:/Users/LocNe/Desktop/Test/src/Utils/JDBCconn.java</file>
         </group>
     </open-files>
 </project-private>

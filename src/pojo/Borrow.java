@@ -10,32 +10,45 @@ package pojo;
  * @author LocNe
  */
 public class Borrow {
-    private String ngaymuon,ngaytra, tienphat;
-    private int idbook,id, iddocgia;
 
-    public Borrow(int docgia,int id, int idbook) {
+    private String ngaymuon, ngaytra, tienphat;
+    private int idbook, id, iddocgia;
+
+    public Borrow(int docgia, int id, int idbook) {
         this.id = id;
-        this.idbook= idbook;
+        this.idbook = idbook;
         this.iddocgia = docgia;
-     
-    }
-       public Borrow(int docgia, int idbook) {
-        
-        this.idbook= idbook;
-        this.iddocgia = docgia;
-     
-    }
-       public Borrow(String tienphat){
-           this.tienphat = tienphat;
-       }
 
-    public Borrow(String ngaymuon, String ngaytra, int idbook,int id, int iddocgia,String tienphat) {
+    }
+
+    public Borrow(int docgia, int idbook) {
+
+        this.idbook = idbook;
+        this.iddocgia = docgia;
+
+    }
+
+    public Borrow(String tienphat) {
+        this.tienphat = tienphat;
+    }
+
+    public Borrow(String ngaymuon, String ngaytra, int idbook, int id, int iddocgia) {
         this.ngaymuon = ngaymuon;
         this.ngaytra = ngaytra;
         this.idbook = idbook;
         this.id = id;
         this.iddocgia = iddocgia;
-        this.tienphat= tienphat;
+        
+
+    }
+
+    public Borrow(String ngaymuon, String ngaytra, int idbook, int id, int iddocgia, String tienphat) {
+        this.ngaymuon = ngaymuon;
+        this.ngaytra = ngaytra;
+        this.idbook = idbook;
+        this.id = id;
+        this.iddocgia = iddocgia;
+        this.tienphat = tienphat;
     }
 
     /**
@@ -83,8 +96,6 @@ public class Borrow {
     /**
      * @return the tien
      */
- 
-
     public int getId() {
         return id;
     }
@@ -124,6 +135,4 @@ public class Borrow {
         this.tienphat = tienphat;
     }
 
-
-    
 }
