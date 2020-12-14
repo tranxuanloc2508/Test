@@ -86,6 +86,10 @@ public class UserController implements Initializable {
             lblError.setTextFill(Color.GREEN);
             lblError.setText("Server is up : Good to go");
         }
+        btnSignIn.setOnKeyPressed(e->{
+        
+        });
+        
     }
 
     private String logIn() {

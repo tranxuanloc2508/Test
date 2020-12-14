@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import static org.junit.Assert.assertTrue;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +28,6 @@ import pojo.Book;
 public class BookTest {
 
     public static Connection conn;
-
 
     @BeforeClass
     public static void setUpClass() {
@@ -42,7 +42,8 @@ public class BookTest {
             Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
- //Test TÌM KHIẾM
+    //Test TÌM KHIẾM
+
     @Test
     public void testTitleNotNull() {
         try {
@@ -83,11 +84,10 @@ public class BookTest {
 ////        }
 ////
 ////    }
-
     @Test
     public void testSearchContain() {
 //        String key = " Lập ";
-          String key = " giao";
+        String key = " giao";
         try {
             List<Book> list = BookServices.Search(key);
 
@@ -175,28 +175,29 @@ public class BookTest {
         }
 
     }
-    
-   // TEST ADD BOOK
+
+    // TEST ADD BOOK
     @Test
-    public  void testAddFieldIsEmpty(){
-       Book b = new Book("KH231", "Mạng máy tính","Lưu Quang Phương","123 trang", "2014","1/9/2014","A176");
-       Book b1 = new Book("", "", "", "", "", "","");
+    public void testAddFieldIsEmpty() {
+        Book b = new Book("KH231", "Mạng máy tính", "Lưu Quang Phương", "123 trang", "2014", "1/9/2014", "A176");
+        Book b1 = new Book("", "", "", "", "", "", "");
         try {
             Assert.assertFalse(BookServices.addBook(b1));//Fields Empty
         } catch (SQLException ex) {
             Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
+
     @Test
-     public  void testAddAllFieldNotEmpty(){
-       Book b = new Book("KH231", "Mạng máy tính","Lưu Quang Phương","123 trang", "2014","1/9/2014","A176");    
+    public void testAddAllFieldNotEmpty() {
+        Book b = new Book("KH231", "Mạng máy tính", "Lưu Quang Phương", "123 trang", "2014", "1/9/2014", "A176");
         try {
             Assert.assertTrue(BookServices.addBook(b));
         } catch (SQLException ex) {
             Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
     }
 //      @Test
 //     public  void testAddFieldContainEmpty(){
@@ -209,26 +210,31 @@ public class BookTest {
 //        }
 //       
 //    }
-   //TEST UPDATE BOOK
-     @Test
-     public void testUpDate(){
-         Book b1 = new Book("", "", "", "", "", "","");
+    //TEST UPDATE BOOK
+
+    @Test
+    public void testUpDate() {
+        Book b = new Book("KH231", "Mạng máy tính", "Lưu Quang Phương", "123 trang", "2014", "1/9/2014", "A176");
+        Book b1 = new Book("KH231", "Mạng máy tínhhhh", "Lưu Quang Phương", "123 trang", "2014", "1/9/2014", "A176");
 //         List<Book> list = BookServices.updateBook(b1);
-     }
-//     @Test
-//    public void testDeleteBook() {
-//        try {
-//            List<Book> list = BookServices.getBooks("");
-//            for(Book b : list)
-//            {
-//                Assert.assertTrue(b.getId() == 2);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            boolean list = BookServices.updateBook(b);
+            Assert.assertTrue(BookServices.updateBook(b1));
+        } catch (SQLException ex) {
+            Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Test
+    public void testDeleteBook() {
+        int a = 74;
+        try {
+            boolean k = BookServices.delBook(a);
+            assertTrue(k);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        
-       
-       
-    
-   
+
+    }
 }

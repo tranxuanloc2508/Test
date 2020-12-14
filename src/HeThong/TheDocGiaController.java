@@ -74,6 +74,11 @@ public class TheDocGiaController implements Initializable {
                 txtSdt.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+//        txtNgaySinh.textProperty().addListener((observable, oldValue, newValue) -> {
+//            if (!newValue.matches("\\d*")) {
+//                txtSdt.setText(newValue.replaceAll("[^\\d]", ""));
+//            }
+//        });
     }
 
     @FXML

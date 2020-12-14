@@ -16,9 +16,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -195,12 +198,12 @@ public class BookController implements Initializable {
 //                txttacGia.setText(newValue.replaceAll("^[a-zA-Z][\\\\w-]+@([\\\\w]+\\\\.[\\\\w]+|[\\\\w]+\\\\.[\\\\w]{2,}\\\\.[\\\\w]{2,})$", ""));
 //            }
 //        });
-         txtNgayNhapSach.textProperty().addListener((observable, oldValue, newValue) -> {
+        txtNgayNhapSach.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 txtNgayNhapSach.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-          txtNXB.textProperty().addListener((observable, oldValue, newValue) -> {
+        txtNXB.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 txtNXB.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -212,9 +215,9 @@ public class BookController implements Initializable {
         if (!this.txtma.getText().equals("") && !this.txtNXB.toString().equals("") && !this.txtten.getText().equals("") && !this.txttacGia.getText().equals("")
                 && !this.txtmota.getText().equals("") && !this.txtNgayNhapSach.toString().equals("") && !this.txtViTri.getText().equals("")) {
             Book b = new Book(this.txtma.getText(), this.txtten.getText(),
-                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(),this.txtNgayNhapSach.getText(),
-                     txtViTri.getText());
-           
+                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(), this.txtNgayNhapSach.getText(),
+                    txtViTri.getText());
+
             try {
                 Utils.BookServices.addBook(b);
                 this.tbBook.getColumns().clear();
@@ -239,7 +242,8 @@ public class BookController implements Initializable {
 
     @FXML
     public void loadFull(ActionEvent ev) throws SQLException {
-
+        this.tbmuon.getColumns().clear();
+        TableColumn clid = new TableColumn("ID Sách");
         TableColumn clma = new TableColumn("Mã sách ");
         TableColumn clten = new TableColumn("Tên sách ");
         TableColumn cltg = new TableColumn("Tác giả ");
@@ -248,6 +252,7 @@ public class BookController implements Initializable {
         TableColumn clnhap = new TableColumn("Ngày nhập ");
         TableColumn clvitri = new TableColumn("Vị trí sách ");
 
+        clid.setCellValueFactory(new PropertyValueFactory("id"));
         clma.setCellValueFactory(new PropertyValueFactory("ma"));
         clten.setCellValueFactory(new PropertyValueFactory("tenSach"));
         cltg.setCellValueFactory(new PropertyValueFactory("tacGia"));
@@ -257,7 +262,7 @@ public class BookController implements Initializable {
         clvitri.setCellValueFactory(new PropertyValueFactory("viTri"));
 //        clContent.setPrefWidth(200);
 
-        this.tbmuon.getColumns().addAll(clma, clten, cltg, clmota, clnam, clnhap, clvitri);
+        this.tbmuon.getColumns().addAll(clid, clma, clten, cltg, clmota, clnam, clnhap, clvitri);
         this.tbmuon.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
         this.tbmuon.setVisible(true);
         this.tbmuon1.setVisible(false);
@@ -268,21 +273,21 @@ public class BookController implements Initializable {
 
         this.tbmuon1.getItems().clear();
 
-//        TableColumn clma = new TableColumn("ID");
+        TableColumn clma = new TableColumn("ID");
         TableColumn clten = new TableColumn("IDbook");
         TableColumn cltg = new TableColumn("IDMember");
         TableColumn clmota = new TableColumn("Ngày mượn");
         TableColumn clnam = new TableColumn("Ngày trả");
         TableColumn cltien = new TableColumn("Tiền phạt");
 
-//        clma.setCellValueFactory(new PropertyValueFactory("id"));
+        clma.setCellValueFactory(new PropertyValueFactory("id"));
         clten.setCellValueFactory(new PropertyValueFactory("idbook"));
         cltg.setCellValueFactory(new PropertyValueFactory("iddocgia"));
         clmota.setCellValueFactory(new PropertyValueFactory("ngaymuon"));
         clnam.setCellValueFactory(new PropertyValueFactory("ngaytra"));
         cltien.setCellValueFactory(new PropertyValueFactory("tienphat"));
         this.tbmuon1.getColumns().clear();
-        this.tbmuon1.getColumns().addAll(clten, cltg, clmota, clnam, cltien);
+        this.tbmuon1.getColumns().addAll(clma, clten, cltg, clmota, clnam, cltien);
         this.tbmuon1.setItems(FXCollections.observableArrayList(BorrowServices.getBorrow("")));
         this.tbmuon.setVisible(false);
 
@@ -290,7 +295,7 @@ public class BookController implements Initializable {
 
     private void loadBook() throws SQLException {
 
-//        TableColumn clid= new TableColumn("id ");
+        TableColumn clid = new TableColumn("ID sách ");
         TableColumn clma = new TableColumn("Mã sách ");
         TableColumn clten = new TableColumn("Tên sách ");
         TableColumn cltg = new TableColumn("Tác giả ");
@@ -299,7 +304,7 @@ public class BookController implements Initializable {
         TableColumn clnhap = new TableColumn("Ngày nhập ");
         TableColumn clvitri = new TableColumn("Vị trí sách ");
 
-//        clid.setCellValueFactory(new PropertyValueFactory("id"));
+        clid.setCellValueFactory(new PropertyValueFactory("id"));
         clma.setCellValueFactory(new PropertyValueFactory("ma"));
         clten.setCellValueFactory(new PropertyValueFactory("tenSach"));
         cltg.setCellValueFactory(new PropertyValueFactory("tacGia"));
@@ -326,7 +331,7 @@ public class BookController implements Initializable {
                             BookServices.delBook(q.getId());
 
                             MemberServices.getAlertInfo("Xóa thành công", Alert.AlertType.INFORMATION).show();
-                            
+
                             this.loadData("");
                             loadBook();
                         } catch (SQLException ex) {
@@ -340,33 +345,49 @@ public class BookController implements Initializable {
             cell.setGraphic(btn);
             return cell;
         });
-        this.tbBook.getColumns().addAll(clma, clten, cltg, clmota, clnam, clnhap, clvitri, colAction);
+        this.tbBook.getColumns().addAll(clid, clma, clten, cltg, clmota, clnam, clnhap, clvitri, colAction);
         this.tbBook.setItems(FXCollections.observableArrayList(BookServices.getBooks("")));
     }
 
     @FXML
     public void muonSach(ActionEvent event) throws ParseException, SQLException {
 
-        Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
-        if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
-            try {
-                BorrowServices.addBorrow(b);
+        List<Member> q = MemberServices.getMembers("");
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("Mượn Thành Công!!");
-                this.loadBook1();
-                alert.showAndWait();
+        for (Member s : q) {
+            if (s.getId() == Integer.parseInt(txtIdUser.getText())) {
+                Borrow b = new Borrow(Integer.parseInt(txtIdUser.getText()), Integer.parseInt(txtma1.getText()));
+                if (MemberServices.getDue(Integer.parseInt(txtIdUser.getText())).equals("còn hạn")) {
+                    try {
+                        BorrowServices.addBorrow(b);
 
-            } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setContentText("Mượn Thành Công!!");
+                        this.loadBook1();
+                        txtIdUser.setText("");
+                        txtma1.setText("");
+                        txtten1.setText("");
+                        alert.showAndWait();
+
+                    } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Mượn không thành công" + ex.getMessage());
+                        alert.showAndWait();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Hết hạn thẻ");
+                    alert.showAndWait();
+                    
+                }
+                break;
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Mượn không thành công" + ex.getMessage());
+                alert.setContentText("sai id");
                 alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Hết hạn thẻ");
-            alert.showAndWait();
-
+            break;
+            
         }
         this.tbmuon1.setVisible(true);
         this.tbmuon.setVisible(false);
@@ -380,24 +401,39 @@ public class BookController implements Initializable {
     @FXML
     private void traSach(ActionEvent event) throws ParseException {
         Borrow b = tbmuon1.getSelectionModel().getSelectedItem();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//         dateFormat.format(tra);
+//         dateFormat.format(muon);
+
+        // Perform addition/subtraction
         String ngaymuon = b.getNgaymuon();
+
         String ngaytra = dateReturn.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));;
+        Date date1 = dateFormat.parse(ngaymuon);
+        Date date2 = dateFormat.parse(ngaytra);
+        long diff = date2.getTime() - date1.getTime();
+        if (diff >= 0) {
+            Borrow bor = new Borrow(ngaymuon, ngaytra, b.getIdbook(), b.getId(), b.getIddocgia(), b.getTienphat());
 
-        Borrow bor = new Borrow(ngaymuon, ngaytra, b.getIdbook(), b.getId(), b.getIddocgia(), b.getTienphat());
+            try {
+                BorrowServices.returnB(b, ngaytra, ngaymuon);
 
-        try {
-            BorrowServices.returnB(b, ngaytra, ngaymuon);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setContentText("Trả sách thành công !!!");
+                this.loadBook1();
+                alert.showAndWait();
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("Trả sách thành công !!!");
-            this.loadBook1();
-            alert.showAndWait();
+            } catch (SQLException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Trả sách thất bại !!!" + ex.getMessage());
+                alert.showAndWait();
 
-        } catch (SQLException ex) {
+            }
+        } else {
+
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Trả sách thất bại !!!" + ex.getMessage());
+            alert.setContentText("Trả sách thất bại !!!");
             alert.showAndWait();
-
         }
 
     }
@@ -523,8 +559,8 @@ public class BookController implements Initializable {
 //           
             Book q = this.tbBook.getSelectionModel().getSelectedItem();
             Book b = new Book(q.getId(), this.txtma.getText(), this.txtten.getText(),
-                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(),this.txtNgayNhapSach.getText(),
-                     txtViTri.getText());
+                    txttacGia.getText(), txtmota.getText(), this.txtNXB.getText(), this.txtNgayNhapSach.getText(),
+                    txtViTri.getText());
             if (b != null) {
                 try {
                     BookServices.updateBook(b);
@@ -534,6 +570,13 @@ public class BookController implements Initializable {
 
                     BookServices.getAlertInfo("Cập nhật thông tin sách thành công !!!",
                             Alert.AlertType.INFORMATION).show();
+                    this.txtma.setText("");
+                    this.txtNXB.setText("");
+                    this.txtten.setText("");
+                    this.txttacGia.setText("");
+                    this.txtmota.setText("");
+                    this.txtNgayNhapSach.setText("");
+                    this.txtViTri.setText("");
                 } catch (SQLException ex) {
                     BookServices.getAlertInfo("Cập nhật thông tin sách thất bại !!!" + ex.getMessage(),
                             Alert.AlertType.ERROR).show();
@@ -555,7 +598,7 @@ public class BookController implements Initializable {
         ResultSet rs = stm.executeQuery();
         if (rs.next()) {
             String a = rs.getString("sum(tienphat)");
-            issueData.add("Tổng tiền phạt đã nhận là : " + a);
+            issueData.add("Tổng tiền phạt đã nhận là : " + a + " VND");
         }
         String sql1 = "Select count(id) from bookdocgia";
         PreparedStatement stm1 = conn.prepareStatement(sql1);
@@ -572,15 +615,15 @@ public class BookController implements Initializable {
             String a = rs2.getString("count(ngaytra)");
             issueData.add("Số quyển sách đã trả là :" + a);
         }
-        String sql3 = "SELECT month(ngaytra),count(ngaytra) "
-                + "FROM bookdocgia  "
-                + "where  ngaytra >= '01/12/2020' AND ngaytra <  '01/01/2021' ";
-        PreparedStatement stm3 = conn.prepareStatement(sql3);
-        ResultSet rs3 = stm3.executeQuery();
-        if (rs3.next()) {
-            String a = rs3.getString("count(ngaytra)");
-            issueData.add("Số quyển sách đã mượn trong năm 2020:" + a);
-        }
+//        String sql3 = "SELECT month(ngaytra),count(ngaytra) "
+//                + "FROM bookdocgia  "
+//                + "where  ngaytra >= '01/12/2020' AND ngaytra <  '01/01/2021' ";
+//        PreparedStatement stm3 = conn.prepareStatement(sql3);
+//        ResultSet rs3 = stm3.executeQuery();
+//        if (rs3.next()) {
+//            String a = rs3.getString("count(ngaytra)");
+//            issueData.add("Số quyển sách đã mượn trong năm 2020:" + a);
+//        }
         listViewData.getItems().setAll(issueData);
     }
 
@@ -605,5 +648,11 @@ public class BookController implements Initializable {
                 "User.fxml")));
         stage.setScene(scence);
         stage.show();
+    }
+
+    @FXML
+    private void loadbrow(ActionEvent event) throws SQLException {
+        loadBook1();
+        tbmuon1.setVisible(true);
     }
 }

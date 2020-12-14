@@ -62,7 +62,8 @@ public class BookServices {
             stm.executeUpdate();
 
             conn.commit();
-            
+            return true;
+
         }
         return false;
 
@@ -72,13 +73,14 @@ public class BookServices {
 
         String sql = "INSERT INTO book(masach,tensach,tacgia,motasach,"
                 + "namxuatban,ngaynhapsach,vitri) VALUES(?,?,?,?,?,?,?)";
-        addBookk(book, sql);
-            
-        
+        if (addBookk(book, sql)) {
+            return true;
+        }
+
         return false;
     }
 
-     public static boolean delBook(int bookId) throws SQLException {
+    public static boolean delBook(int bookId) throws SQLException {
         Connection conn = JDBCconn.getConnection();
         String sql = "DELETE FROM book WHERE id=?";
         PreparedStatement stm = conn.prepareStatement(sql);
@@ -88,6 +90,7 @@ public class BookServices {
 
         return kq > 0;
     }
+
     public static boolean update(Book book, String sql) throws SQLException {
         if (!book.getMa().equals("") && !book.getTenSach().equals("") && !book.getTacGia().equals("") && !book.getMoTa().equals("")
                 && !book.getNamXuatBan().equals("") && !book.getNgayNhap().equals("") && !book.getViTri().equals("")) {
@@ -114,15 +117,12 @@ public class BookServices {
         }
         return false;
     }
-        
-
-    
 
     public static boolean updateBook(Book book) throws SQLException {
 
         String sql = "UPDATE book Set masach=?,tensach=?,tacgia=?,motasach=?,"
                 + "namxuatban=?,ngaynhapsach=?,vitri=? WHERE id=?";
-        if(update(book, sql)){
+        if (update(book, sql)) {
             return true;
         }
         return false;
@@ -165,7 +165,7 @@ public class BookServices {
         return books;
 
     }
-       
+
     public static List<Book> Search(String keyword) throws SQLException {
         List<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM book ";

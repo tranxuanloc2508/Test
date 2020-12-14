@@ -11,7 +11,7 @@ and open the template in the editor.
     -fx-font-family:Tahoma;
     
 }
-Text.a{
-    -fx-font-size: 20;
-    
+
+Text .a{
+    -fx-font-size : 25;
 }
